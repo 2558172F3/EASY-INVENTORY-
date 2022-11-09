@@ -2,7 +2,15 @@
 software contable  inventario 
 ES UN SISTEMA DE ALMACEN DE VENTA DONDE SE EXIBE EL PRODUCTO LA VENTA DEL POR MAYOR Y DIRECTO A USUARIOS FINALES 
 
-Programadores
--Edgar Andres Hernandez @edgarhernandes-ar
--Jhon Gomez @Jhongomez00x
--pedro Caisedo @plcaisedo
+## Programadores
+-Edgar Andres Hernandez [@edgarhernandes-ar](ed-andres28@hotmail.com (https://github.com/edgarhernandes-ar)
+
+
+-Jhon Gomez [@Jhongomez00x](https://github.com/Jhongomez00x)
+
+
+
+
+-pedro Caisedo [@plcaisedo](https://github.com/@plcaisedo)
+
+
