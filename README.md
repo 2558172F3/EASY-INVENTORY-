@@ -32,6 +32,6 @@ ES UN SISTEMA DE ALMACEN DE VENTA DONDE SE EXIBE EL PRODUCTO LA VENTA DEL POR MA
 -Para el tema del servidor se manejara Docker para almacenar los diferentes servicios PHP-FPM, NGINX, MYSQL
 
 ## CI/CD (integracion y despliegue continuo)
--Por definir
+-Por definirse
 
 
