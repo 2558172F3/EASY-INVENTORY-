@@ -10,7 +10,10 @@ ES UN SISTEMA DE ALMACEN DE VENTA DONDE SE EXIBE EL PRODUCTO LA VENTA DEL POR MA
 
 
 
-
 -pedro Caisedo [@plcaisedo](https://github.com/@plcaisedo)
+
+
+
+-David Jimenez [@Brayanpa21](https://github.com/@Brayanpa21)
 
 
