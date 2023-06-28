@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Registro de Usuarios</title>
+  <title>Registro de Empleados</title>
   <link rel="stylesheet" href="statics/style.css">
 </head>
 <body>
     <div class="container">
-      <h2>Registro de Usuarios</h2>
+      <h2>Registro de Empleados</h2>
       <form id="registration-form">
         <!-- Campos del formulario -->
         <!-- ... -->
               <!-- Campo de "Nombre de usuario" -->
               <div class="form-group">
-                <label for="username">Nombre de usuario:</label>
+                <label for="username">Nombre del empleado:</label>
                 <input type="text" id="username" name="username" required>
               </div>
               <!-- Campo de "Correo electrónico" -->
@@ -46,6 +46,15 @@
                   <input type="radio" name="gender" value="female" required>
                   <span>Femenino</span>
                 </label>
+                <div class="form-group">
+                    <label for="rol">Rol:</label>
+                    <select id="rol" required>
+                      <option value="">Seleccionar Rol</option>
+                      <option value="cajero">Cajero</option>
+                      <option value="jefe_bodega">Jefe de Bodega</option>
+                      <option value="administrador">Administrador</option>
+                    </select>
+                  </div>
               </div>
               <!-- Botón de "Registrarse" -->
               <button type="submit">Registrarse</button>
@@ -69,11 +78,12 @@
       function validateForm() {
         // Validación de los campos del formulario
         var username = document.getElementById("username");
-      var email = document.getElementById("email");
-      var password = document.getElementById("password");
-      var confirmPassword = document.getElementById("confirm-password");
-      var birthdate = document.getElementById("birthdate");
-      var gender = form.querySelector("input[name='gender']:checked");
+      const email = document.getElementById("email");
+      const password = document.getElementById("password");
+      const confirmPassword = document.getElementById("confirm-password");
+      const birthdate = document.getElementById("birthdate");
+      const gender = form.querySelector("input[name='gender']:checked");
+      const rolSelect = document.getElementById('rol');
 
       resetValidation();
 
@@ -101,6 +111,9 @@
       if (!gender) {
         markAsInvalid(form.querySelector(".gender-label"));
       }
+      if (!rolSelect.value) {
+        markAsInvalid(rolSelect);
+        }
   
         // Si todos los campos son válidos, muestra un mensaje de éxito y resetea el formulario
         if (form.querySelectorAll(".error").length === 0) {
@@ -110,7 +123,7 @@
             title: 'Registro exitoso',
             text: 'El formulario ha sido registrado exitosamente.'
           }).then(function() {
-            window.location.href = "minimercado.html";
+            window.location.href = "index.html";
           });
         } else {
           // Mostrar SweetAlert2 con mensaje de error
