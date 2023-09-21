@@ -12,8 +12,18 @@
         <!-- ... -->
               <!-- Campo de "Nombre de usuario" -->
               <div class="form-group">
-                <label for="username">Nombre del empleado:</label>
+                <label for="username">Nombre de usuario</label>
                 <input type="text" id="username" name="username" required>
+              </div>
+              <!-- Campo de "nombre del empleado" -->
+              <div class="form-group">
+                <label for="nombres">Nombre del empleado</label>
+                <input type="text" id="nombres" name="username" required>
+              </div>
+              <!-- Campo de "Apellidos del empleado" -->
+              <div class="form-group">
+                <label for="apellidos">Apellidos del empleado</label>
+                <input type="text" id="apellidos" name="username" required>
               </div>
               <!-- Campo de "Correo electrónico" -->
               <div class="form-group">
@@ -78,18 +88,28 @@
       function validateForm() {
         // Validación de los campos del formulario
         var username = document.getElementById("username");
-      const email = document.getElementById("email");
-      const password = document.getElementById("password");
-      const confirmPassword = document.getElementById("confirm-password");
-      const birthdate = document.getElementById("birthdate");
-      const gender = form.querySelector("input[name='gender']:checked");
-      const rolSelect = document.getElementById('rol');
+        const nombres = document.getElementById("nombres");
+        const apellidos = document.getElementById("apellidos");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm-password");
+        const birthdate = document.getElementById("birthdate");
+        const gender = form.querySelector("input[name='gender']:checked");
+        const rolSelect = document.getElementById('rol');
 
       resetValidation();
 
       // Validación de cada campo del formulario
       if (!username.value) {
         markAsInvalid(username);
+      }
+
+      if (!nombres.value) {
+        markAsInvalid(nombres);
+      }
+
+      if (!apellidos.value) {
+        markAsInvalid(apellidos);
       }
 
       if (!email.value || !isValidEmail(email.value)) {
