@@ -3,11 +3,44 @@
 <head>
   <title>Iniciar sesión</title>
   <link rel="stylesheet" href="statics/login.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  
 </head>
 <body>
+<!-- importar switalert2 -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <?php
+    include("conexion.php");
+    if(isset($_POST['username']) && isset($_POST['password'])){
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+      $query = "SELECT * FROM users WHERE nombre_usuario = '$username' AND contraseña = '$password'";
+      $result = mysqli_query($conn, $query);
+      if(mysqli_num_rows($result) == 1){
+        $row = mysqli_fetch_array($result);
+        $_SESSION['username'] = $username;
+        echo '<script> swal.fire({
+          title: "Bienvenido",
+          text: "Has iniciado sesión correctamente",
+          icon: "success",
+          confirmButtonText: "Aceptar"
+        }).then(function() {
+          window.location = "dashboard/index.html";
+        });</script>';
+      }else{
+        echo "<script>swal.fire({
+          title: 'Error',
+          text: 'Usuario o contraseña incorrectos',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });</script>";
+      }
+    }
+    ?>
   <div class="container">
     <h2>Iniciar sesión</h2>
-    <form id="login-form">
+    <form id="login" method="post" action="index.php">
       <!-- Campos del formulario -->
       <div class="form-group">
         <label for="username">Nombre de usuario:</label>
@@ -27,7 +60,7 @@
   </div>
 
   <!-- Biblioteca SweetAlert2 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
 
   <script>
@@ -41,25 +74,8 @@
       var username = document.getElementById("username");
       var password = document.getElementById("password");
 
-      // Validación del formulario de inicio de sesión
-      if (username.value === "usuario" && password.value === "contraseña") {
-        // Mostrar SweetAlert2 con mensaje de éxito
-        Swal.fire({
-          icon: 'success',
-          title: 'Inicio de sesión exitoso',
-          text: 'Has iniciado sesión correctamente.'
-        }).then(function() {
-          window.location = "index.html";
-        });
-      } else {
-        // Mostrar SweetAlert2 con mensaje de error
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Usuario o contraseña incorrectos.'
-        });
-      }
-    }
+      form.submit();
+      
 
     // Otras funciones
     // ...
