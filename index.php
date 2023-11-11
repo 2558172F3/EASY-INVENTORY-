@@ -15,7 +15,7 @@
     if(isset($_POST['username']) && isset($_POST['password'])){
       $username = $_POST['username'];
       $password = $_POST['password'];
-      $query = "SELECT * FROM users WHERE nombre_usuario = '$username' AND contraseña = '$password'";
+      $query = "SELECT * FROM users WHERE nombre_usuario = '$username' AND cast(aes_decrypt(contraseña,'asdf') as char) = '$password'";
       $result = mysqli_query($conn, $query);
       if(mysqli_num_rows($result) == 1){
         $row = mysqli_fetch_array($result);
