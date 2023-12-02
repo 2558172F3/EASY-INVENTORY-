@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PortalLayout from "../layout/PortalLayout";
+import { Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider";
 import { API_URL } from "../auth/authConstants";
 
@@ -65,37 +66,24 @@ export default function Dashboard() {
   }
 
   return (
+    <>
     <PortalLayout>
-      <div className="dashboard">
-        <h1>Dashboard de {auth.getUser()?.name ?? ""}</h1>
-      </div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div className="container-fluid">
-      <a className="navbar-brand" href="/index.html">Dashboard de Administración</a>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-          <li className="nav-item">
-            <a className="nav-link" href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal" id="shown.bs.modal">Registrar un empleado</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/vista_clientes.html">Ver clientes</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Inventario</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
 
+    {/* modal */}
+
+    
+    {/* end modal */}
+      <div className="dashboard">
+        
+      </div>
+      
+      
+  <h1>{auth.getUser()?.name ?? ""}</h1>
   <div className="container">
     <div className="row">
       <div className="col-md-6">
         <div className="card">
-          <h2 className="card-header">Información de Ventas</h2>
+          <h2 className="card-header">InhtmlFormación de Ventas</h2>
           <div className="card-body">
             <p>Estadísticas de ventas del mes actual.</p>
             <canvas id="sales-chart" width="100%" height="100px"></canvas>
@@ -107,7 +95,7 @@ export default function Dashboard() {
         <div className="card">
           <h2 className="card-header">Inventario</h2>
           <div className="card-body">
-            <p>Información sobre el inventario de productos.</p>
+            <p>InhtmlFormación sobre el inventario de productos.</p>
             <table className="table table-striped">
               <thead>
                 <tr>
@@ -166,7 +154,8 @@ export default function Dashboard() {
       </div>
     </div>
   </footer>
+      </PortalLayout>
+  </>
 
-    </PortalLayout>
   );
 }
