@@ -4,6 +4,10 @@ import { NavBar } from '../components/NavBar';
 import { useAuth } from '../auth/AuthProvider';
 import { Navigate } from 'react-router-dom';
 
+const goToLogin = () => {
+  window.location.href = '/';
+}
+
 const Registro = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -26,12 +30,29 @@ const Registro = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     // Aquí puedes realizar la lógica para enviar los datos del formulario al servidor
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      const response = await fetch('http://localhost:5000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      }).then((res) => {
+        if (res.status === 200) {
+          goToLogin();
+        }
+        return res.json();
+
+      });
+      // console.log('Success:', response.body);
+      
+    } catch (error) {
+      console.log('Error:', error);
+      
+    }
   };
 
   return (
