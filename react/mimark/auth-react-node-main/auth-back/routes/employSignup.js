@@ -1,13 +1,14 @@
 const express = require("express");
 const Employ = require("../schema/empleado");
+const User = require("../schema/user");
 const { jsonResponse } = require("../lib/jsonResponse");
 const log = require("../lib/trace");
 const router = express.Router();
 
 router.post("/", async function (req, res, next) {
-  const { username, password, name,surname,cc,email,phone,address } = req.body;
+  const { username, password, name,surname,cc,email,phone,address,role } = req.body;
   console.log(req.body);
-  if (!username || !password ||!name || !surname || !cc  || !email || !phone || !address)     {
+  if (!username || !password ||!name || !surname || !cc  || !email || !phone || !address || !role)     {
     //return next(new Error("username and password are required"));
     return res.status(409).json(
       jsonResponse(409, {
@@ -28,6 +29,8 @@ router.post("/", async function (req, res, next) {
 
     if (!employExists) {
       const employ= new Employ({ name, surname, cc, email, phone, address });
+      const user = new User({ username, password, name, role });
+      user.save();
 
       employ.save();
 

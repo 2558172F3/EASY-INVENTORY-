@@ -4,9 +4,9 @@ const { jsonResponse } = require("../lib/jsonResponse");
 const router = express.Router();
 
 router.post("/", async function (req, res, next) {
-  const { username, password, name } = req.body;
+  const { username, password, name, role} = req.body;
 
-  if (!username || !password || !name) {
+  if (!username || !password || !name || !role) {
     //return next(new Error("username and password are required"));
     return res.status(409).json(
       jsonResponse(409, {
@@ -27,7 +27,7 @@ router.post("/", async function (req, res, next) {
       );
       //return next(new Error("user already exists"));
     } else {
-      const user = new User({ username, password, name });
+      const user = new User({ username, password, name, role });
 
       user.save();
 

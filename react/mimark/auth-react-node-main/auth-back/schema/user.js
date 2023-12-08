@@ -9,7 +9,9 @@ const UserSchema = new Mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
+  role: { type: String, required: true },
 });
+
 
 UserSchema.pre("save", function (next) {
   if (this.isModified("password") || this.isNew) {

@@ -8,6 +8,7 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [role, setRole] = useState("client"); // ["admin", "client", "employee"] "
   const [errorResponse, setErrorResponse] = useState("");
 
   const auth = useAuth();
@@ -21,7 +22,7 @@ export default function Signup() {
       const response = await fetch("http://localhost:3000/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, name }),
+        body: JSON.stringify({ username, password, name , role}),
       });
       if (response.ok) {
         const json = (await response.json()) as AuthResponse;
@@ -29,6 +30,7 @@ export default function Signup() {
         setUsername("");
         setPassword("");
         setName("");
+        setRole("");
         goTo("/");
       } else {
         const json = (await response.json()) as AuthResponseError;

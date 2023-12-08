@@ -47,8 +47,8 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
           <li className="nav-item">
             <a className="nav-link" href="#">Inventario</a>
           </li>
-          <li>
-              <Link to="/me" className="nav-link">Profile</Link>
+          <li className="nav-item">
+            <a className="nav-link" href="#"  data-bs-toggle="modal" data-bs-target="#product" id="shown.bs.modal">Agregar producto</a>
           </li>
           <li>
             <Link to="/me" className="nav-link">{auth.getUser()?.username ?? ""}</Link>

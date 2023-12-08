@@ -12,6 +12,7 @@ app.use(cors());
 const port = process.env.PORT || 3000;
 
 main().catch((err) => console.log(err));
+console.log(process.env.DB_CONNECTION_STRING);
 
 async function main() {
   await mongoose.connect(process.env.DB_CONNECTION_STRING);
@@ -29,6 +30,11 @@ app.use("/api/signup", require("./routes/signup"));
 app.use("/api/login", require("./routes/login"));
 app.use("/api/signout", require("./routes/logout"));
 app.use("/api/employSignup", require("./routes/employSignup"));
+app.use("/api/productos", require("./routes/getProduct"));
+app.use("/api/findOneProduct", require("./routes/findOneProduct"));
+app.use("/api/createProduct", require("./routes/createProduct"));
+app.use("/api/updateProduct", require("./routes/updateProduct"));
+app.use("/api/deleteProduct", require("./routes/deleteProduct"));
 
 // Ruta para renovar el token de acceso utilizando el token de actualización
 app.use("/api/refresh-token", require("./routes/refreshToken"));
