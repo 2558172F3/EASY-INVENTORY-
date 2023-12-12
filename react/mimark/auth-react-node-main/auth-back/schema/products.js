@@ -39,7 +39,7 @@ productSchema.methods.createProduct = async function (name, price, cantidad) {
 }
 
 productSchema.methods.uptadeProduct = async function (id, name, price, cantidad) {
-  const product= await Product.findById(id);
+  const product= await Product.findByIdAndUpdate(id);
   product.name = name;
   product.price = price;
   product.cantidad = cantidad;

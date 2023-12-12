@@ -56,53 +56,53 @@ export const ModalFormEmploy = () => {
           </div>
 
           <div className="modal-body">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Usuario:</label>
-                <input type="text" className="form-control" id="recipient-name" onChange={(e) => setUsername(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label"  >Nombre:</label>
-                <input type="text" className="form-control" id="recipient-name" onChange={(e) => setName(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Apellido:</label>
-                <input type="text" className="form-control" id="recipient-name" onChange={(e) => setSurname(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Cédula:</label>
-                <input type="text" className="form-control" id="recipient-name" onChange={(e) => setCc(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Dirección:</label>
-                <input type="text" className="form-control" id="recipient-name" onChange={(e) => setAddress(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Teléfono:</label>
-                <input type="text" className="form-control" id="recipient-name" onChange={(e) => setPhone(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Correo:</label>
-                <input type="text" className="form-control" id="recipient-name" onChange={(e) => setEmail(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Contraseña:</label>
-                <input type="password" className="form-control" id="recipient-name" onChange={(e) => setPassword(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Confirmar contraseña:</label>
-                <input type="password" className="form-control" id="recipient" name="recipient" onChange={(e) => setPassword_confirmation(e.target.value)}/>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="recipient-name" className="col-form-label">Rol:</label>
-                <select className="form-select" aria-label="Default select example" onChange={(e) => setRole(e.target.value)}>
-                  <option value="employee">Empleado</option>
-                  <option value="admin">Administrador</option>
-                </select>
-              </div>
-              <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" id="save">Guardar</button>
-            </form>
-          </div>
+  <form onSubmit={handleSubmit}>
+    <div className="mb-3">
+      <label htmlFor="username" className="col-form-label">Usuario:</label>
+      <input type="text" className="form-control" id="username" onChange={(e) => setUsername(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="name" className="col-form-label"  >Nombre:</label>
+      <input type="text" className="form-control" id="name" onChange={(e) => setName(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="surname" className="col-form-label">Apellido:</label>
+      <input type="text" className="form-control" id="surname" onChange={(e) => setSurname(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="cc" className="col-form-label">Cédula:</label>
+      <input type="text" className="form-control" id="cc" onChange={(e) => setCc(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="address" className="col-form-label">Dirección:</label>
+      <input type="text" className="form-control" id="address" onChange={(e) => setAddress(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="phone" className="col-form-label">Teléfono:</label>
+      <input type="text" className="form-control" id="phone" onChange={(e) => setPhone(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="email" className="col-form-label">Correo:</label>
+      <input type="text" className="form-control" id="email" onChange={(e) => setEmail(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="password" className="col-form-label">Contraseña:</label>
+      <input type="password" className="form-control" id="password" onChange={(e) => setPassword(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="password_confirmation" className="col-form-label">Confirmar contraseña:</label>
+      <input type="password" className="form-control" id="password_confirmation" name="password_confirmation" onChange={(e) => setPassword_confirmation(e.target.value)}/>
+    </div>
+    <div className="mb-3">
+      <label htmlFor="role" className="col-form-label">Rol:</label>
+      <select className="form-select" id="role" aria-label="Default select example" onChange={(e) => setRole(e.target.value)}>
+        <option value="employee">Empleado</option>
+        <option value="admin">Administrador</option>
+      </select>
+    </div>
+    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" id="save">Guardar</button>
+  </form>
+</div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" id="close">Cerrar</button>
             

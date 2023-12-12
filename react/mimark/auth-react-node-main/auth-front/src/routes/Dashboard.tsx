@@ -7,6 +7,12 @@ import { ModalFormEmploy } from "../components/modalFormEmploy";
 import { ModalFormProducts } from "../components/modalFormProduct";
 import { ModalFormEditProducts} from "../components/modalFormEditproduct";
 
+interface producto {
+  _id: string;
+  producto: string;
+  cantidad: number;
+  price: number;
+}
 
 
 export default function Dashboard() {
@@ -32,7 +38,10 @@ export default function Dashboard() {
       }
     });
   }
- 
+
+  const editProducto = async () => {
+    ConsultarProductos();
+  }
 
 
   useEffect(() => {
@@ -40,19 +49,13 @@ export default function Dashboard() {
   }, []);
 
  
-  interface producto {
-    id: number;
-    producto: string;
-    cantidad: number;
-    price: number;
-  }
-
+  
   return (
     <>
     <PortalLayout>
       <ModalFormEmploy/>
       <ModalFormProducts/>
-      {/* <ModalFormEditProducts  products={productos}/> */}
+      
       
     
       <div className="dashboard">
@@ -78,13 +81,24 @@ export default function Dashboard() {
               </thead>
               <tbody>
                 {productos.map((producto1:producto) => (
-                  <tr key={producto1.id}>
+                  <>
+                  <ModalFormEditProducts  producto={{
+        
+                    _id: producto1._id,
+                    producto: producto1.producto,
+                    cantidad: producto1.cantidad,
+                    price: producto1.price,
+                  }
+                  
+                } />
+                  <tr key={producto1._id}>
                     <td>{producto1.producto}</td>
                     <td>{producto1.cantidad}</td>
                     <td>{producto1.price}</td>
-                    <td><button className="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#product-edit" id="shown.bs.modal">editar</button></td>
+                    <td><button className="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#product-edit" id="shown.bs.modal" onClick={() => editProducto()}>editar</button></td>
                     <td><button  className="btn btn-danger">eliminar</button></td>
                   </tr>
+                  </>
                 ))}
               </tbody>
             </table>
