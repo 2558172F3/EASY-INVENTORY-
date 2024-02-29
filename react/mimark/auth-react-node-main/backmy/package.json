@@ -1,0 +1,30 @@
+{
+  "name": "apinodeexpresmysql",
+  "version": "1.0.0",
+  "description": "Conexion a MySQL desde la API con node,express, express-myconnection, y mysql",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mysql",
+    "express-myconnection",
+    "json"
+  ],
+  "author": "Helber Rojas",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "express-myconnection": "^1.0.4",
+    "jsonwebtoken": "^9.0.2",
+    "mysql": "^2.18.1"
+  }
+}

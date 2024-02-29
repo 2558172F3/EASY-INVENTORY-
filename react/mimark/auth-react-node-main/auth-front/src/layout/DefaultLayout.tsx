@@ -9,7 +9,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
     <>
       <header>
         <nav className="nav navbar">
-          <h4 className="brand">INVSOFT</h4>
+          <h4 className="brand">EASY INVENTORY</h4>
           <ul>
             <li>
               <Link to="/">Login</Link>
