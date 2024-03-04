@@ -78,36 +78,38 @@ routes.post('/refresh_token', async (req, res) => {
 
 // Ruta para registrar un nuevo usuario
 routes.post('/register', async (req, res) => {
-    console.log("estoy registrando",req.body)
+    console.log("estoy registrando", req.body)
     try {
-      const { username, password, rol,nombre, apellidos, telefono, correo } = req.body;
-  
-      // Verifica si el usuario ya existe en la base de datos
-      req.getConnection(async (error, conexion) => {
-        conexion.query('INSERT INTO personal (rol, nombre, apellidos, telefono, correo) VALUES (?,?,?,?,?)', [rol, nombre, apellidos, telefono, correo], async (err, result) => {
-            if (err) {
-                console.log("Error al crear el personal", err);
-            } else {
-                console.log("Personal creado con éxito, ID:", result.insertId);
-                const idPersonal = result.insertId;
-                // Ahora puedes usar idPersonal para crear un usuario
-                const passEncript = await encryptPassword(password);
-                conexion.query('INSERT INTO users (id_usuario_personal, nombre_usuario, contraseña) VALUES (?,?,?)', [idPersonal, username, passEncript], (err, result) => {
-                    if (err) {
-                        console.log("Error al crear el usuario", err);
-                    } else {
-                        console.log("Usuario creado con éxito");
-                    }
-                });
-            }
-        });
-    });
-    }
-      catch{
-        console.log("error ");
-      }
+        const { username, password, rol, nombre, apellidos, telefono, correo } = req.body;
 
+        // Verifica si el usuario ya existe en la base de datos
+            conexion.query('INSERT INTO personal (rol, nombre, apellidos, telefono, correo) VALUES (?,?,?,?,?)', [rol, nombre, apellidos, telefono, correo], async (err, result) => {
+                if (err) {
+                    console.log("Error al crear el personal", err);
+                    return res.status(500).json({ error: err });
+                } else {
+                    console.log("Personal creado con éxito, ID:", result.insertId);
+                    const idPersonal = result.insertId;
+                    // Ahora puedes usar idPersonal para crear un usuario
+                    const passEncript = await encryptPassword(password);
+                    conexion.query('INSERT INTO users (id_usuario_personal, nombre_usuario, contraseña) VALUES (?,?,?)', [idPersonal, username, passEncript], (err, result) => {
+                        if (err) {
+                            console.log("Error al crear el usuario", err);
+                            return res.status(500).json({ error: err });
+                        } else {
+                            console.log("Usuario creado con éxito");
+                        }
+                    });
+                }
+            });
+        });
+        return res.status(200).json({ "mensaje": "usuario creado" });
+    } catch {
+        console.log("error ");
+        return res.status(500).json({ error: 'Error interno del servidor' });
+    }
 })
+
 
     
 
