@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { API_URL } from "../auth/authConstants";
+// import { API_URL } from "../auth/authConstants";
 
 interface product {
     
@@ -20,37 +20,34 @@ export const ModalFormEditProducts = (arg :product) => {
     const [price, setPrice] = useState(arg.producto.price);
     const [errorResponse, setErrorResponse] = useState("");
 
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
-        const response = await fetch(`${API_URL}/updateProduct`, {
-            method: "put",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                id: arg.producto._id,
-                producto: producto,
-                cantidad: cantidad,
-                price: price,
-            }),
-        }).then((res) => res.json()).then((data) => {
-            console.log(data);
-            if (data.statuscode === 200) {
-                alert("Producto registrado correctamente");
-            }
-            else {
-                setErrorResponse(data.body.error);
-            }
-        });
-    }
+    // const handleSubmit = async (e: any) => {
+    //     e.preventDefault();
+    //     const response = await fetch(`${API_URL}/updateProduct`, {
+    //         method: "put",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             id: arg.producto._id,
+    //             producto: producto,
+    //             cantidad: cantidad,
+    //             price: price,
+    //         }),
+    //     }).then((res) => res.json()).then((data) => {
+    //         console.log(data);
+    //         if (data.statuscode === 200) {
+    //             alert("Producto registrado correctamente");
+    //         }
+    //         else {
+    //             setErrorResponse(data.body.error);
+    //         }
+    //     });
+    // }
 
-    useEffect(() => {
-        handleSubmit;
-    }
-    , []);
-
-    
-
+    // useEffect(() => {
+    //     handleSubmit;
+    // }
+    // , []);
 
     return (
         <>
@@ -65,7 +62,7 @@ export const ModalFormEditProducts = (arg :product) => {
                         </div>
 
                         <div className="modal-body">
-                            <form onSubmit={handleSubmit}>
+                            <form >
                                 <div className="mb-3">
                                     <label htmlFor="producto" className="col-form-label">Producto:</label>
                                     <input type="text" className="form-control" id="producto" onChange={(e) => setProducto(e.target.value)} value={producto} />

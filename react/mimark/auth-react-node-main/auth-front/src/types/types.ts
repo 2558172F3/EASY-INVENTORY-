@@ -1,26 +1,35 @@
-export interface AuthResponse {
-  body: {
-    user: User;
-    accessToken: string;
-    refreshToken: string;
-  };
+export interface User {
+  accessToken:  string;
+  refreshToken: string;
+  user:         UserClass;
+}
+
+export interface UserClass {
+  username: string;
+  personal: number;
+  client:   null;
 }
 export interface AuthResponseError {
-  body: {
-    error: string;
-  };
+body: {
+  error: string;
+};
 }
+export type refreshResponse = {
+access: string;
+};
 
-export interface User {
-  _id: string;
-  name: string;
-  username: string;
-}
+
 
 export interface AccessTokenResponse {
-  statusCode: number;
-  body: {
-    accessToken: string;
-  };
-  error?: string;
+statusCode: number;
+access: string;
+error?: string;
+}
+
+export interface Productos {
+  ID_Producto:  number;
+  ID_Categoria: number;
+  Nombre:       string;
+  Precio:       number;
+  Cantidad:     number;
 }

@@ -2,7 +2,6 @@ import express from "express";
 const routes = express.Router();
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
-import db from "express-myconnection";
 const secretKey="minimercado"
 
 async function encryptPassword(password) {
@@ -19,36 +18,39 @@ async function encryptPassword(password) {
 
 // Ruta para iniciar sesión
 routes.post('/login', async (req, res) => {
+  console.log("estoy logeando",req.body);
     try {
       const { username, password } = req.body;
-  
-      // Busca al usuario en la base de datos
-      const user = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-      if (user.length === 0) {
-        return res.status(401).json({ error: 'Credenciales inválidas' });
-      }
-  
-      // Verifica la contraseña
-      const validPassword = await bcrypt.compare(password, user[0].password);
-      if (!validPassword) {
-        return res.status(401).json({ error: 'Credenciales inválidas' });
-      }
-  
-      // Genera un token de acceso
-      const accessToken = jwt.sign({ userId: user[0].id }, secretKey, { expiresIn: '15m' });
-  
-      // Genera un token de refresco
-      const refreshToken = jwt.sign({ userId: user[0].id }, secretKey, { expiresIn: '7d' });
-  
-      // Almacena el token de refresco en la base de datos
-      await db.query('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user[0].id, refreshToken]);
-  
-      res.status(200).json({ accessToken, refreshToken });
+      
+      // Busca el usuario en la base de datos
+      req.getConnection(async (error, conexion) => {
+        conexion.query('SELECT * FROM users WHERE nombre_usuario = ?', [username], async (err, result) => {
+            if (err) {
+                console.log("Error al buscar el usuario", err);
+            } else {
+                console.log("Usuario encontrado:", result);
+                if (result.length === 0) {
+                    return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
+                }
+                const user = result[0];
+                console.log("usuario",user.contraseña);
+                const validPassword = await bcrypt.compare(password, user.contraseña);
+                if (!validPassword) {
+                    return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
+                }
+                const accessToken = jwt.sign({ userId: user.id_usuario }, secretKey, { expiresIn: '15m' });
+                const refreshToken = jwt.sign({ userId: user.id_usuario }, secretKey);
+                await conexion.query('INSERT INTO Tokens (refresh_token) VALUES (?)', [refreshToken]);
+
+                res.status(200).json({ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario,personal:user.id_usuario_personal,client:user.id_usuario_cliente } });
+            }
+        });
+    });
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       res.status(500).json({ error: 'Error interno del servidor' });
     }
-  });
+});
   
 
 // Ruta para renovar el token de acceso
@@ -76,39 +78,72 @@ routes.post('/refresh_token', async (req, res) => {
     }
   });
 
+ // ruta para cerificar acces token
+  routes.post('/verify_token', async (req, res) => {
+    console.log("verificando token",req.body);
+    try {
+      const { accessToken } = req.body;
+      console.log("token a verificar",accessToken);
+
+      // Verifica el token de acceso
+      const decoded = jwt.verify(accessToken, secretKey);
+      console.log("token verificado",decoded);
+      res.status(200).json({ message: 'Token de acceso válido' });
+    } catch (error) {
+      console.error('Error al verificar el token de acceso:', error);
+      res.status(401).json({ error: 'Token de acceso inválido' });
+    }
+  });
+
 // Ruta para registrar un nuevo usuario
 routes.post('/register', async (req, res) => {
     console.log("estoy registrando", req.body)
     try {
         const { username, password, rol, nombre, apellidos, telefono, correo } = req.body;
+        const hashedPassword = await encryptPassword(password);
+        console.log("contraseña encriptada", hashedPassword);
+        // Verifica si el usuario ya existe
 
-        // Verifica si el usuario ya existe en la base de datos
-            conexion.query('INSERT INTO personal (rol, nombre, apellidos, telefono, correo) VALUES (?,?,?,?,?)', [rol, nombre, apellidos, telefono, correo], async (err, result) => {
+        req.getConnection(async (error, conexion) => {
+            conexion.query('SELECT * FROM users WHERE nombre_usuario = ?', [username], async (err, result) => {
                 if (err) {
-                    console.log("Error al crear el personal", err);
-                    return res.status(500).json({ error: err });
+                    console.log("Error al buscar el usuario", err);
                 } else {
-                    console.log("Personal creado con éxito, ID:", result.insertId);
-                    const idPersonal = result.insertId;
-                    // Ahora puedes usar idPersonal para crear un usuario
-                    const passEncript = await encryptPassword(password);
-                    conexion.query('INSERT INTO users (id_usuario_personal, nombre_usuario, contraseña) VALUES (?,?,?)', [idPersonal, username, passEncript], (err, result) => {
-                        if (err) {
-                            console.log("Error al crear el usuario", err);
-                            return res.status(500).json({ error: err });
-                        } else {
-                            console.log("Usuario creado con éxito");
-                        }
+                    console.log("Usuario encontrado:", result);
+                    if (result.length > 0) {
+                        return res.status(400).json({ error: 'El nombre de usuario ya está en uso' });
+                    }
+                    // Almacena el nuevo usuario en la base de datos
+                    // Verifica si el usuario ya existe en la base de datos
+                    conexion.query('INSERT INTO personal (rol, nombre, apellidos, telefono, correo) VALUES (?,?,?,?,?)', [rol, nombre, apellidos, telefono, correo], async (err, result) => {
+                      if (err) {
+                          console.log("Error al crear el personal", err);
+                          return res.status(500).json({ error: err });
+                      } else {
+                        console.log("Personal creado con éxito, ID:", result.insertId);
+                        const idPersonal = result.insertId;
+                        // Ahora puedes usar idPersonal para crear un usuario
+                        conexion.query('INSERT INTO users (id_usuario_personal, nombre_usuario, contraseña) VALUES (?,?,?)', [idPersonal, username,  hashedPassword], (err, result) => {
+                          if (err) {
+                              console.log("Error al crear el usuario", err);
+                              return res.status(500).json({ error: err });
+                          } else {
+                              console.log("Usuario creado con éxito");
+                              res.status(201).json({ message: 'Usuario registrado correctamente' });
+                          }
+                      });
+  
+                      }
+    
                     });
                 }
             });
         });
-        return res.status(200).json({ "mensaje": "usuario creado" });
-    } catch {
-        console.log("error ");
-        return res.status(500).json({ error: 'Error interno del servidor' });
+    } catch (error) {
+        console.error('Error al registrar el usuario:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
     }
-})
+});
 
 
     

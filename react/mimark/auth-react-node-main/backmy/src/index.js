@@ -2,6 +2,7 @@
 import express from "express";
 import mysql from "mysql";
 import myConn from "express-myconnection";
+import cors from "cors";
 import routes from "./routes/routes.js";
 import authRoutes from "./routes/authroutes.js"
 // 12 - Agrego el middleware para parser los datos a JSON, OJO se debe instalar npm i body-parser
@@ -12,12 +13,13 @@ const dbOptions = {
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "Ibague2023*",
-  database: "minimercado",
+  password: "Ibague2024*",
+  database: "minimercad2",
 };
 
 //2 - Creamos la instancia del servidor
 const app = express();
+app.use(cors());
 
 app.set("port", process.env.PORT || 9000);
 

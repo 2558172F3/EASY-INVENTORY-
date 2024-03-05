@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react';
-import { API_URL } from '../auth/authConstants';
+// import { API_URL } from '../auth/authConstants';
 
 export const ModalFormEmploy = () => {
     const [username, setUsername] = useState("");
@@ -13,37 +13,37 @@ export const ModalFormEmploy = () => {
   const [password_confirmation, setPassword_confirmation] = useState("");
   const [role, setRole] = useState("employee"); // ["admin", "client", "employee"] "
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (password !== password_confirmation) {
-      alert("Las contraseñas no coinciden");
-      return;
-    }
-    const response = await fetch(`${API_URL}/employSignup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password, name, surname, cc, email, phone , address, role}),
-    }).then((res) => res.json()).then((data) => {
-      console.log(data);
-      if (data.statuscode === 200) {
-        alert(data.body.message);
+  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
+  //   if (password !== password_confirmation) {
+  //     alert("Las contraseñas no coinciden");
+  //     return;
+  //   }
+  //   const response = await fetch(`${API_URL}/employSignup`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ username, password, name, surname, cc, email, phone , address, role}),
+  //   }).then((res) => res.json()).then((data) => {
+  //     console.log(data);
+  //     if (data.statuscode === 200) {
+  //       alert(data.body.message);
         
         
-      }
-      else {
-        alert(data.body.error);
-      }
+  //     }
+  //     else {
+  //       alert(data.body.error);
+  //     }
 
     
-    });
+  //   });
     
-  }
+  // }
 
-  useEffect(() => {
-    handleSubmit;
-    }, []);
+  // useEffect(() => {
+  //   handleSubmit;
+  //   }, []);
     return (
         <>
             {/* modal formulario de registro de empleado en bootstrap */}
@@ -56,7 +56,7 @@ export const ModalFormEmploy = () => {
           </div>
 
           <div className="modal-body">
-  <form onSubmit={handleSubmit}>
+  <form >
     <div className="mb-3">
       <label htmlFor="username" className="col-form-label">Usuario:</label>
       <input type="text" className="form-control" id="username" onChange={(e) => setUsername(e.target.value)}/>

@@ -1,73 +1,55 @@
-import { useState } from "react";
-import DefaultLayout from "../layout/DefaultLayout";
+import { useState,useEffect } from 'react';
 import { useAuth } from "../auth/AuthProvider";
-import { Navigate } from "react-router-dom";
-import { AuthResponse, AuthResponseError } from "../types/types";
-import "./style/Login.css";
+import { Navigate } from 'react-router-dom';
+import { useSigninMutation } from '../api/user';
+import DefaultLayout from '../layout/DefaultLayout';
 
-export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorResponse, setErrorResponse] = useState("");
-
-  const auth = useAuth();
-
-  function handleChange(e: React.ChangeEvent) {
-    const { name, value } = e.target as HTMLInputElement;
-    if (name === "username") {
-      setUsername(value);
-    }
-    if (name === "password") {
-      setPassword(value);
-    }
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    // auth.setIsAuthenticated(true);
-    try {
-      const response = await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      if (response.ok) {
-        const json = (await response.json()) as AuthResponse;
-        console.log(json);
-
-        if (json.body.accessToken && json.body.refreshToken) {
-          auth.saveUser(json);
+export const Login: React.FC =  () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const { mutateAsync: signin } = useSigninMutation()
+    const auth=useAuth();
+    const data = auth.isTokenValid;
+    
+        const handleSubmit = async (event: React.FormEvent) => {
+            event.preventDefault();
+            try {
+                const dataTokens =await signin({ username, password })
+                if (dataTokens) {
+                    await auth.validateToken();
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
-      } else {
-        const json = (await response.json()) as AuthResponseError;
-
-        setErrorResponse(json.body.error);
-      }
-    } catch (error) {
-      console.log(error);
+        useEffect(() => {
+          handleSubmit;
+          }, []);
+    if (data) {
+        return <Navigate to="/dashboard" />;
     }
-  }
-  if (auth.isAuthenticated) {
-    return <Navigate to="/dashboard" />;
-  }
   return (
     <DefaultLayout>
       <div className="login">
         <form onSubmit={handleSubmit} className="form">
           <h1 className="titulo-page">Login</h1>
-          {!!errorResponse && <div className="errorMessage">{errorResponse}</div>}
+          {/* {!!errorResponse && <div className="errorMessage">{errorResponse}</div>} */}
           <label>Username</label>
           <input
             name="username"
             type="text"
-            onChange={handleChange}
+            onChange={
+              (event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)
+          }
             value={username}
           />
           <label>Password</label>
           <input
             type="password"
             name="password"
-            onChange={handleChange}
+            onChange={
+              (event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)
+          }
             value={password}
           />
 
