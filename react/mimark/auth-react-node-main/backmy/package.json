@@ -14,7 +14,7 @@
     "express-myconnection",
     "json"
   ],
-  "author": "Helber Rojas",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.3"

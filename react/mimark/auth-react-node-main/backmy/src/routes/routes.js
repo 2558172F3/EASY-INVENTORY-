@@ -82,6 +82,9 @@ routes.get("/categoria/:id", (req, res) => {
 
 
 
+
+
+
 // 11 - Ruta para insertar
 // routes.post("/", (req, res) => {
 //   req.getConnection((error, conexion) => {

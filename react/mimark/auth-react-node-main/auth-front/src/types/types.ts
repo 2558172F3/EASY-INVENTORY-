@@ -33,3 +33,12 @@ export interface Productos {
   Precio:       number;
   Cantidad:     number;
 }
+
+export interface Clientes {
+  id_cliente: number;
+  nombre:     string;
+  apellidos:  string;
+  telefono:   string;
+  correo:     string;
+  ciudad:     string;
+}

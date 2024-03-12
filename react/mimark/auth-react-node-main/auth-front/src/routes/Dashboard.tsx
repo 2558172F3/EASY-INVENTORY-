@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from  '@tanstack/react-query';
 import { useGetProducts } from "../api/products";
+import { useGetClientes } from "../api/client";
 import PortalLayout from "../layout/PortalLayout";
 // import { Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider";
@@ -25,35 +26,13 @@ export default function Dashboard() {
     queryFn: useGetProducts,
     staleTime: 1000*60*30,refetchOnWindowFocus: false,refetchInterval: 1000*60*30,
   });
-
-  // const [productos, setProductos] = useState([]); 
-
-  const ConsultarProductos= async () => {
-    
-    // const response = await fetch(`${API_URL}/productos`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // }).then((res) => res.json()).then((data) => {
-    //   console.log(data);
-    //   if (data.statuscode === 200) {
-    //     setProductos(data.body.products);
-    //   }
-    //   else {
-    //     alert(data.body.error);
-    //   }
-    // });
-  }
-
-  const editProducto = async () => {
-    ConsultarProductos();
-  }
+  const { data:clientes,  } = useQuery({
+    queryKey: ['clintes'],
+    queryFn: useGetClientes,
+    staleTime: 1000*60*30,refetchOnWindowFocus: false,refetchInterval: 1000*60*30,
+  });
 
 
-  useEffect(() => {
-    ConsultarProductos();
-  }, []);
   if (!productos) {
     return <div>Loading...</div>
   }
@@ -121,7 +100,7 @@ export default function Dashboard() {
     <div className="container">
       <div className="row">
         <div className="col-md-6">
-          <p>Derechos de autor &copy; 2023 Minimercado</p>
+          <p>Derechos de autor &copy; 2024 Minimarck</p>
         </div>
         <div className="col-md-6">
           <ul className="list-inline text-end">
