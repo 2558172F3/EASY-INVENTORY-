@@ -1,24 +1,35 @@
 import React, { useState ,useEffect} from 'react';
+import { useSignupMutation } from '../api/user';
 // import { API_URL } from '../auth/authConstants';
 
 export const ModalFormEmploy = () => {
     const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [cc, setCc] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
   const [role, setRole] = useState("employee"); // ["admin", "client", "employee"] "
+  const { mutateAsync: signup } = useSignupMutation()
 
-  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  //   if (password !== password_confirmation) {
-  //     alert("Las contraseñas no coinciden");
-  //     return;
-  //   }
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log(username, name, surname, email, password, phone, password_confirmation, role,"aqui estoy en handleSubmit");
+    if (password !== password_confirmation) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+   try {
+    const response = await signup({ username, nombre:name, apellidos:surname, correo:email, password, telefono:phone, role:parseInt(role) })
+    console.log(response);
+    alert(response.message);
+   } catch (error) {
+    console.log(error);
+    
+   }
+
+    
   //   const response = await fetch(`${API_URL}/employSignup`, {
   //     method: "POST",
   //     headers: {
@@ -39,11 +50,11 @@ export const ModalFormEmploy = () => {
     
   //   });
     
-  // }
+  }
 
-  // useEffect(() => {
-  //   handleSubmit;
-  //   }, []);
+  useEffect(() => {
+    handleSubmit;
+    }, []);
     return (
         <>
             {/* modal formulario de registro de empleado en bootstrap */}
@@ -56,7 +67,7 @@ export const ModalFormEmploy = () => {
           </div>
 
           <div className="modal-body">
-  <form >
+  <form onSubmit={handleSubmit} >
     <div className="mb-3">
       <label htmlFor="username" className="col-form-label">Usuario:</label>
       <input type="text" className="form-control" id="username" onChange={(e) => setUsername(e.target.value)}/>
@@ -68,14 +79,6 @@ export const ModalFormEmploy = () => {
     <div className="mb-3">
       <label htmlFor="surname" className="col-form-label">Apellido:</label>
       <input type="text" className="form-control" id="surname" onChange={(e) => setSurname(e.target.value)}/>
-    </div>
-    <div className="mb-3">
-      <label htmlFor="cc" className="col-form-label">Cédula:</label>
-      <input type="text" className="form-control" id="cc" onChange={(e) => setCc(e.target.value)}/>
-    </div>
-    <div className="mb-3">
-      <label htmlFor="address" className="col-form-label">Dirección:</label>
-      <input type="text" className="form-control" id="address" onChange={(e) => setAddress(e.target.value)}/>
     </div>
     <div className="mb-3">
       <label htmlFor="phone" className="col-form-label">Teléfono:</label>
@@ -96,8 +99,10 @@ export const ModalFormEmploy = () => {
     <div className="mb-3">
       <label htmlFor="role" className="col-form-label">Rol:</label>
       <select className="form-select" id="role" aria-label="Default select example" onChange={(e) => setRole(e.target.value)}>
-        <option value="employee">Empleado</option>
-        <option value="admin">Administrador</option>
+        <option value="3">cajero</option>
+        <option value="4">Administrador</option>
+        <option value="1">Cliente</option>
+        <option value="2">proveedor</option>
       </select>
     </div>
     <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" id="save">Guardar</button>

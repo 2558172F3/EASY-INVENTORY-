@@ -111,7 +111,7 @@ routes.post('/register', async (req, res) => {
                 } else {
                     console.log("Usuario encontrado:", result);
                     if (result.length > 0) {
-                        return res.status(400).json({ error: 'El nombre de usuario ya está en uso' });
+                        return res.status(500).json({ error: 'El nombre de usuario ya está en uso' });
                     }
                     // Almacena el nuevo usuario en la base de datos
                     // Verifica si el usuario ya existe en la base de datos

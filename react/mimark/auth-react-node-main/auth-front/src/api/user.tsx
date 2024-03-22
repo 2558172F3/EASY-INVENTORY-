@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import apiClient from '../apiClient'
 import { User,refreshResponse,UserClass } from '../types/types'
+import { AxiosError } from 'axios';
 
 
 
@@ -95,3 +96,55 @@ export const useLogoutMutation = () =>
       console.log('logoutMutation');
     },
   })
+
+export const useSignupMutation = (
+  
+) =>{
+  return useMutation({
+    mutationKey: ['signup'],
+    mutationFn: async (
+      {
+        username,
+        password,
+        nombre,
+        apellidos,
+        correo,
+        telefono,
+        role,
+      }: {
+        username: string
+        password: string
+        nombre: string
+        apellidos: string
+        correo: string
+        telefono: string
+        role: number
+      }
+    ) =>
+      (
+        await apiClient.post(`auth/register`, {
+          username,
+          password,
+          nombre,
+          apellidos,
+          correo,
+          telefono,
+          role,
+        })
+      ).data,
+      onError: (error) => {
+        if ((error as AxiosError).response) {
+          console.log(error, 'error aqui estoy en useSignupMutation');
+          alert(((error as AxiosError).response?.data as { error: string })?.error);
+        } else {
+          console.log(error, 'error aqui estoy en useSignupMutation');
+          alert('An error occurred.');
+        }
+      },
+      onSuccess:async (data) => {
+        console.log('signupMutation', data);
+        
+      },
+  })
+  
+}
