@@ -8,9 +8,9 @@ routes.get("/", (req, res) => {
   //   res.send("<h1>Lista completa de las piezas de la coleccion</h1>");
   req.getConnection((error, conexion) => {
     if (error) return res.send(error);
-    conexion.query("SELECT * FROM producto", (err, piezasRows) => {
+    conexion.query("SELECT * FROM producto", (err, productosRows) => {
       if (err) return res.send(err);
-      res.json(piezasRows);
+      res.json(productosRows);
     });
   });
 });
@@ -32,19 +32,75 @@ routes.get("/:id", (req, res) => {
 });
 
 routes.post("/", (req, res) => {
+  const {ID_categoria,Nombre,Precio,Cantidad}=req.body.producto
+  console.log("estamos en el crear producto",ID_categoria,Nombre,Precio,Cantidad);
   req.getConnection((error, conexion) => {
     if (error) return res.send(error);
     // console.log(req.body);
     // "INSERT INTO producto SET `ID_Categoria` = 1, `Nombre` = 'azucar', `Precio` = 3000, `Cantidad` = 50"
 
-    conexion.query("INSERT INTO producto SET ?", [req.body], (err, piezasRows) => {
-      if (err) return res.send(err);
+    conexion.query("INSERT INTO producto (ID_categoria,Nombre,Precio,Cantidad)  values(?,?,?,?) ", [ID_categoria,Nombre,Precio,Cantidad], (err, piezasRows) => {
+      if (err) {
+        return res.status(500).json(err);
+      }
       
-      res.json("<h2>Producto agregado con éxito</h2>");
+      res.status(200).json("<h2>Producto agregado con éxito</h2>");
     }
     );
   });
 });
+
+routes.put("/aumentar/:id", (req, res) => {
+  req.getConnection((error, conexion) => {
+    const cantidad =1
+    conexion.query(
+      "UPDATE producto SET Cantidad = Cantidad + ? WHERE id_producto = ? ", [cantidad,req.params.id],(err,aumento)=>{
+        if (err) {
+          console.log(err);
+        }
+        res.json("aumento");
+      }
+    )
+        
+      }
+    );
+  });
+
+  routes.put("/disminuir/:id", (req, res) => {
+    req.getConnection((error, conexion) => {
+      const cantidad =1
+      conexion.query(
+        "UPDATE producto SET Cantidad = Cantidad - ? WHERE id_producto = ? ", [cantidad,req.params.id],(err,aumento)=>{
+          if (err) {
+            console.log(err);
+            res.status(500).json(err);
+          }
+          res.status(200).json("dismunuir");
+        }
+      )
+          
+        }
+      );
+    });
+
+routes.put("/editproduct/:id", (req, res) => {
+  console.log(req.body);
+  req.getConnection((error, conexion) => {
+    const {ID_categoria,Nombre,Precio,Cantidad}=req.body.producto
+    conexion.query(
+      "UPDATE producto SET ID_categoria = ?, Nombre = ?, Precio = ?, Cantidad = ? WHERE id_Producto = ? ", [ID_categoria,Nombre,Precio,Cantidad,parseInt(req.params.id)],(err,editproducts)=>{
+        if (err) {
+          console.log(err);
+          res.status(500).json(err);
+        }
+        res.status(200).json(editproducts);
+      }
+    )
+        
+      }
+    );
+  });
+
 
 routes.delete("/del/:id", (req, res) => {
   req.getConnection((error, conexion) => {
@@ -58,7 +114,8 @@ routes.delete("/del/:id", (req, res) => {
         if (err) {
           return res.send(err);
         }
-        res.json("<h2>Producto ELIMINADO con éxito</h2>");
+        
+        res.status(200).json("<h2>Producto ELIMINADO con éxito</h2>");
       }
     );
   });
@@ -79,6 +136,8 @@ routes.get("/categoria/:id", (req, res) => {
     );
   });
 });
+
+
 
 
 

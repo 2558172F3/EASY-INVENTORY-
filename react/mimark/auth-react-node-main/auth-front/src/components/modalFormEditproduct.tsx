@@ -1,58 +1,61 @@
 import { useState,useEffect } from "react";
 // import { API_URL } from "../auth/authConstants";
+import {useEditProduct} from "../api/products"
 
 interface product {
     
     producto:{
         _id: string;
-        producto: string;
-        cantidad: number;
-        price: number;
+        ID_categoria:number;
+        Nombre: string;
+        Cantidad: number;
+        Precio: number;
     }
+    refetch?: Function;
   
 }
 
 
 export const ModalFormEditProducts = (arg :product) => {
-    console.log(arg.producto._id, "arg.id");
-    const [producto, setProducto] = useState(arg.producto.producto);
-    const [cantidad, setCantidad] = useState(arg.producto.cantidad);
-    const [price, setPrice] = useState(arg.producto.price);
-    const [errorResponse, setErrorResponse] = useState("");
+    const [Nombre, setProducto] = useState(arg.producto.Nombre);
+    const [Cantidad, setCantidad] = useState(arg.producto.Cantidad);
+    const [Precio, setPrice] = useState(arg.producto.Precio);
 
-    // const handleSubmit = async (e: any) => {
-    //     e.preventDefault();
-    //     const response = await fetch(`${API_URL}/updateProduct`, {
-    //         method: "put",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             id: arg.producto._id,
-    //             producto: producto,
-    //             cantidad: cantidad,
-    //             price: price,
-    //         }),
-    //     }).then((res) => res.json()).then((data) => {
-    //         console.log(data);
-    //         if (data.statuscode === 200) {
-    //             alert("Producto registrado correctamente");
-    //         }
-    //         else {
-    //             setErrorResponse(data.body.error);
-    //         }
-    //     });
-    // }
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        const producto :product ={
+            producto:{
+                _id:arg.producto._id,
+                ID_categoria : arg.producto.ID_categoria,
+                Nombre,
+                Cantidad,
+                Precio
+            }
+        }
+        const response = await useEditProduct(arg.producto._id,producto)
+        console.log(response,"===================== status code response");
+        
+        if (response==200) {
+            if (arg.refetch) {
+                arg.refetch()
+            }
+            alert("producto modificado")
+            
+            
+        } else {
+            
+        }
+    }
 
-    // useEffect(() => {
-    //     handleSubmit;
-    // }
-    // , []);
+    useEffect(() => {
+        handleSubmit;
+    }
+    , []);
 
     return (
         <>
             {/* modal formulario de registro de empleado en bootstrap */}
-            <div className="modal fade" id="product-edit" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id={`product-edit-${arg.producto._id}`} tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
 
@@ -62,22 +65,22 @@ export const ModalFormEditProducts = (arg :product) => {
                         </div>
 
                         <div className="modal-body">
-                            <form >
+                            <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="producto" className="col-form-label">Producto:</label>
-                                    <input type="text" className="form-control" id="producto" onChange={(e) => setProducto(e.target.value)} value={producto} />
+                                    <input type="text" className="form-control" id={`producto-${arg.producto._id}`} onChange={(e) => setProducto(e.target.value)} value={Nombre} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="cantidad" className="col-form-label">Cantidad:</label>
-                                    <input type="number" className="form-control" id="cantidad" onChange={(e) => setCantidad(Number(e.target.value))} value={cantidad} />
+                                    <input type="number" className="form-control" id={`cantidad-${arg.producto._id}`} onChange={(e) => setCantidad(Number(e.target.value))} value={Cantidad} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="precio" className="col-form-label">Precio:</label>
-                                    <input type="number" className="form-control" id="precio" onChange={(e) => setPrice(Number(e.target.value))} value={price} />
+                                    <input type="number" className="form-control" id={`precio-${arg.producto._id}`} onChange={(e) => setPrice(Number(e.target.value))} value={Precio} />
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" className="btn btn-primary">Registrar</button>
+                                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Registrar</button>
                                 </div>
                             </form>
                         </div>

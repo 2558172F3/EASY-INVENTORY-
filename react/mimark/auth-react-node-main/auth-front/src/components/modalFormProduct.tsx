@@ -1,30 +1,47 @@
 import { useState,useEffect } from "react";
+import { useCreateProduct } from "../api/products";
 
+interface product {
+    
+    producto:{
+        _id: string;
+        ID_categoria:number;
+        Nombre: string;
+        Cantidad: number;
+        Precio: number;
+    }
+}
 
-export const ModalFormProducts = () => {
-    const [producto, setProducto] = useState("");
-    const [cantidad, setCantidad] = useState("");
-    const [price, setPrice] = useState("");
-    const [errorResponse, setErrorResponse] = useState("");
+interface reload {
+    refetch?: Function;
+}
+
+export const ModalFormProducts = (arg:reload) => {
+    const [Nombre, setProducto] = useState("");
+    const [ID_categoria, setID_categoria] = useState("");
+    const [Cantidad, setCantidad] = useState("");
+    const [Precio, setPrice] = useState("");
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        const response = await fetch("http://localhost:3000/api/createProduct", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ producto, cantidad, price }),
-        }).then((res) => res.json()).then((data) => {
-            console.log(data);
-            if (data.statuscode === 200) {
-                alert(data.body.message);
-                setProducto("");
-                setCantidad("");
-                setPrice("");
+        const producto :product ={
+            producto:{
+                _id:"0",
+                ID_categoria:parseInt(ID_categoria) ,
+                Nombre,
+                Cantidad:parseInt(Cantidad),
+                Precio:parseInt(Cantidad)
             }
-            else {
-                alert(data.body.error);
+        }
+        const response = await useCreateProduct(producto)
+        console.log(response,"===================== status code response");
+
+        if (response===200) {
+            alert("Producto se creó de manera exitosa")
+            if (arg.refetch) {
+                arg.refetch()
             }
-        });
+        }
     }
 
     useEffect(() => {
@@ -48,15 +65,19 @@ export const ModalFormProducts = () => {
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="recipient-name" className="col-form-label">Producto:</label>
-                                    <input type="text" className="form-control" id="recipient-name" onChange={(e) => setProducto(e.target.value)} value={producto} />
+                                    <input type="text" className="form-control"  onChange={(e) => setProducto(e.target.value)} value={Nombre} />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="recipient-name" className="col-form-label">Categoria:</label>
+                                    <input type="number" className="form-control"  onChange={(e) => setID_categoria(e.target.value)} value={ID_categoria} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="recipient-name" className="col-form-label">Cantidad:</label>
-                                    <input type="number" className="form-control" id="recipient-name" onChange={(e) => setCantidad(e.target.value)} value={cantidad} />
+                                    <input type="number" className="form-control"  onChange={(e) => setCantidad(e.target.value)} value={Cantidad} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="recipient-name" className="col-form-label">Precio:</label>
-                                    <input type="number" className="form-control" id="recipient-name" onChange={(e) => setPrice(e.target.value)} value={price} />
+                                    <input type="number" className="form-control"  onChange={(e) => setPrice(e.target.value)} value={Precio} />
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
