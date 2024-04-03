@@ -4,6 +4,7 @@ import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {Login} from "./routes/Login.tsx";
 import Signup from "./routes/Signup.tsx";
+import Clients from "./routes/clients.tsx"
 import { AuthProvider } from "./auth/AuthProvider.tsx";
 import Dashboard from "./routes/Dashboard.tsx";
 import ProtectedRoute from "./routes/ProtectedRoute.tsx";
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path:"/clients",
+    element:<Clients/>
   },
   {
     path: "/",

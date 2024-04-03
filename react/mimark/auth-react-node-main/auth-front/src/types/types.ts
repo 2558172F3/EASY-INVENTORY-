@@ -35,10 +35,12 @@ export interface Productos {
 }
 
 export interface Clientes {
-  id_cliente: number;
-  nombre:     string;
-  apellidos:  string;
-  telefono:   string;
-  correo:     string;
-  ciudad:     string;
+  nombre:        string;
+  apellidos:     string;
+  telefono:      string;
+  correo:        string;
+  ciudad:        string;
+  id_factura:    number;
+  total_factura: number;
 }
+
