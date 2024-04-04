@@ -8,12 +8,15 @@ import authRoutes from "./routes/authroutes.js"
 import clientrouts from "./routes/clientroutes.js";
 import persroutes from "./routes/persroutes.js";
 import rolroutes from "./routes/rolroutes.js";
+import proveedorlist from "./routes/proveedor.js";
+
 
 
 
 
 // 12 - Agrego el middleware para parser los datos a JSON, OJO se debe instalar npm i body-parser
 import bodyParser from "body-parser";
+
 
 // 6 - Definimos la constante para almacenar los parametros de conexion a la BdD ==> const dbOptions
 const dbOptions = {
@@ -41,7 +44,7 @@ app.use("/productos", routes);
 app.use("/cliente", clientrouts);
 app.use("/personal", persroutes);
 app.use("/rol", rolroutes);
-
+app.use("/proveedor", proveedorlist);
 app.use("/auth",authRoutes);
 
 // 5-  Creo la ruta base
