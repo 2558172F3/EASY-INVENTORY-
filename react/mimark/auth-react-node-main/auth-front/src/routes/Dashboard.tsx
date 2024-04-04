@@ -1,41 +1,42 @@
-import { useEffect, useState } from "react";
+
 import { useQuery } from  '@tanstack/react-query';
+import { useState, useEffect } from 'react';
 import { useGetProducts,useDisminucion, useAumento } from "../api/products";
-import { useGetClientes } from "../api/client";
 import PortalLayout from "../layout/PortalLayout";
 // import { Link } from "react-router-dom";
-import { useAuth } from "../auth/AuthProvider";
 // import { API_URL } from "../auth/authConstants";
 import { ModalFormEmploy } from "../components/modalFormEmploy";
 import { ModalFormProducts } from "../components/modalFormProduct";
 import { ModalFormEditProducts} from "../components/modalFormEditproduct";
 import { Productos } from "../types/types";
 
-interface producto {
-  _id: string;
-  producto: string;
-  cantidad: number;
-  price: number;
-}
-
 
 export default function Dashboard() {
   // const auth = useAuth();
+  // const [, setProductos] = useState<Productos[]>([]);
+  const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
+  const [ordenCantidad, setOrdenCantidad] = useState<'asc' | 'desc' | null>(null);
   const { data:productos, isLoading, isError, error ,refetch} = useQuery({
     queryKey: ['productos'],
     queryFn: useGetProducts,
   });
-  const { data:clientes,  } = useQuery({
-    queryKey: ['clintes'],
-    queryFn: useGetClientes,
-    staleTime: 1000*60*30,refetchOnWindowFocus: false,refetchInterval: 1000*60*30,
-  });
-
-
+  
   if (!productos) {
     
     return <div>Loading...</div>
   }
+  let productosFiltrados = productos;
+
+  // Filtrar por categoría
+  // if (filtroCategoria) {
+  //   productosFiltrados = productosFiltrados.filter(producto => producto.ID_Categoria === filtroCategoria);
+  // }
+
+  // Ordenar por cantidad
+  if (ordenCantidad) {
+    productosFiltrados.sort((a, b) => ordenCantidad === 'asc' ? a.Cantidad - b.Cantidad : b.Cantidad - a.Cantidad);
+  }
+
   const disminuir = async (id:number)=>{
     let producto = productos.find(producto => producto.ID_Producto === id);
     if (producto) {
@@ -59,23 +60,15 @@ export default function Dashboard() {
     }
     console.log("error",response);
   }
-
-  console.log(productos);
-  
-  
   return (
     <>
     <PortalLayout>
       <ModalFormEmploy/>
       <ModalFormProducts refetch={refetch} />
-      
-      
-    
       <div className="dashboard">
         
       </div>
-      
-      
+
   {/* <h1>{auth.getUser()?.name ?? ""}</h1> */}
   <div className="container">
     <div className="row">
@@ -98,14 +91,12 @@ export default function Dashboard() {
                 {productos.map((producto1:Productos) => (
                   <>
                   <ModalFormEditProducts  producto={{
-        
                     _id: producto1.ID_Producto.toString(),
                     ID_categoria:producto1.ID_Categoria,
                     Nombre: producto1.Nombre,
                     Cantidad: producto1.Cantidad,
                     Precio: producto1.Precio,
                   }
-                 
                 } 
                 refetch={refetch}
                 

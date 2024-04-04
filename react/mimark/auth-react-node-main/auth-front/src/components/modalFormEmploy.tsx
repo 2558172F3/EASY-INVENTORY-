@@ -26,30 +26,8 @@ export const ModalFormEmploy = () => {
     alert(response.message);
    } catch (error) {
     console.log(error);
-    
    }
 
-    
-  //   const response = await fetch(`${API_URL}/employSignup`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ username, password, name, surname, cc, email, phone , address, role}),
-  //   }).then((res) => res.json()).then((data) => {
-  //     console.log(data);
-  //     if (data.statuscode === 200) {
-  //       alert(data.body.message);
-        
-        
-  //     }
-  //     else {
-  //       alert(data.body.error);
-  //     }
-
-    
-  //   });
-    
   }
 
   useEffect(() => {

@@ -6,7 +6,33 @@ routes.get("/", (req, res) => {
   //   res.send("<h1>Lista completa de las piezas de la coleccion</h1>");
   req.getConnection((error, conexion) => {
     if (error) return res.send(error);
-    conexion.query("SELECT * FROM cliente", (err, piezasRows) => {
+    conexion.query(`
+    SELECT 
+    c.nombre, 
+    c.apellidos, 
+    c.telefono, 
+    c.correo, 
+    c.ciudad, 
+    f.id_factura,
+    SUM(p.precio * pf.cantidad) AS total_factura
+FROM 
+    cliente c
+JOIN 
+    factura f ON c.id_cliente = f.id_user_cliente
+JOIN 
+    producto_factura pf ON f.id_factura = pf.id_factura
+JOIN 
+    producto p ON pf.id_producto = p.id_producto
+GROUP BY 
+    c.nombre, 
+    c.apellidos, 
+    c.telefono, 
+    c.correo, 
+    c.ciudad, 
+    f.id_factura
+    ORDER BY 
+    total_factura DESC;
+    `, (err, piezasRows) => {
       if (err) return res.send(err);
       res.json(piezasRows);
     });
