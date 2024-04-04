@@ -44,3 +44,11 @@ export interface Clientes {
   total_factura: number;
 }
 
+export interface ClientesPost {
+  nombre:        string;
+  apellidos:     string;
+  telefono:      string;
+  correo:        string;
+  ciudad:        string;
+
+}
