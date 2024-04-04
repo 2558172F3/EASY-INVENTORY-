@@ -6,6 +6,10 @@ import cors from "cors";
 import routes from "./routes/routes.js";
 import authRoutes from "./routes/authroutes.js"
 import clientrouts from "./routes/clientroutes.js";
+import persroutes from "./routes/persroutes.js";
+import rolroutes from "./routes/rolroutes.js";
+
+
 
 
 // 12 - Agrego el middleware para parser los datos a JSON, OJO se debe instalar npm i body-parser
@@ -16,13 +20,13 @@ const dbOptions = {
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "Ibague2024*",
-  database: "minimercad2",
+  password: "",
+  database: "minimercado",
 };
 
 //2 - Creamos la instancia del servidor
 const app = express();
-app.use(cors());
+app.use(cors(dbOptions));
 
 app.set("port", process.env.PORT || 9000);
 
@@ -35,6 +39,8 @@ app.use(myConn(mysql, dbOptions, "single"));
 // 9 - Usando las rutas despues de importar el archivo de rutas
 app.use("/productos", routes);
 app.use("/cliente", clientrouts);
+app.use("/personal", persroutes);
+app.use("/rol", rolroutes);
 
 app.use("/auth",authRoutes);
 
