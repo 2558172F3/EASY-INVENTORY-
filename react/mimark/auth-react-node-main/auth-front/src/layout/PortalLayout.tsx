@@ -34,6 +34,12 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
             <Link className="nav-link" to="/ClienteForm">Agregar clientes</Link>
           </li>
           <li className="nav-item">
+            <Link className="nav-link" to="/perss">Ver Personal</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/persform">Gestion del Personal</Link>
+          </li>
+          <li className="nav-item">
             <Link className="nav-link" to="/proveedor">Gestion Proveedor</Link>
           </li>
           <li className="nav-item">

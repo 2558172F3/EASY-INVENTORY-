@@ -70,3 +70,41 @@ export interface ProveedorList {
   Ciudad:          string;
   Acciones:        string;
 }
+
+export interface personal {  
+  rol:           number; 
+  nombre:        string;
+  apellidos:     string;
+  telefono:      string;
+  correo:        string;
+          
+  
+}
+
+export interface personalPost {  
+  id_personal:   number,
+  rol:           number;
+  nombre:        string;
+  apellidos:     string;
+  telefono:      string;
+  correo:        string;
+  
+}
+
+export interface personalPut {  
+  rol:           number;
+  nombre:        string;
+  apellidos:     string;
+  telefono:      string;
+  correo:        string;
+  
+}
+
+export interface personalDelete {  
+  rol:           number;
+  nombre:        string;
+  apellidos:     string;
+  telefono:      string;
+  correo:        string;
+  
+}

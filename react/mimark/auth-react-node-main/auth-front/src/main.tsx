@@ -11,6 +11,9 @@ import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 import Profile from "./routes/Profile.tsx";
 import  ClientesForm  from "./routes/clientesform.tsx";
 import  ClienteInfo  from "./routes/clientesId.tsx";
+import PersForm from "./routes/persform.tsx";
+import PersonalInfo from "./routes/persld.tsx";
+import Perss from "./routes/perss.tsx"
 import  ProveedorList  from "./routes/ProveedorList.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -40,6 +43,22 @@ const router = createBrowserRouter([
     path:"/cliente/:id",
     element:<ClienteInfo/>
   },
+  {
+    path:"/perss",
+    element:<Perss/>
+  },
+  {
+    path:"/persform",
+    element:<PersForm/>
+  },
+
+  {
+    path:"/personal/:id",
+    element:<PersonalInfo/>
+  },
+
+
+
   {
    path:"/proveedor",
     element:<ProveedorList/>

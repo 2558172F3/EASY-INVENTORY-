@@ -1,6 +1,92 @@
+// 8-- Archivo de las rutas
 import express from "express";
 const routes = express.Router();
 
+routes.get("/", (req, res) => {
+  req.getConnection((error, conexion) => {
+    console.log(req.params.id);
+    if (error) return res.send(error
+    );
+    conexion.query(
+      "SELECT * FROM personal",
+      [req.params.id],
+      (err, personalRows) => {
+        if (err) return res.send(err);
+        res.json(personalRows);
+      }
+    );
+  });
+});
+
+
+routes.get("/:id", (req, res) => {
+  req.getConnection((error, conexion) => {
+    console.log(req.params.id);
+    if (error) return res.send(error
+    );
+    conexion.query(
+      "SELECT * FROM personal WHERE id_personal = ?",
+      [req.params.id],
+      (err, personalRows) => {
+        if (err) return res.send(err);
+        res.json(personalRows);
+      }
+    );
+  });
+});
+
+
+// 11 - Ruta para insertar
+routes.post("/", (req, res) => {
+  req.getConnection((error, conexion) => {
+    if (error) return res.send(error);
+    // console.log(req.body);
+    conexion.query("INSERT INTO personal SET ?", [req.body], (err, piezasRows) => {
+      if (err) return res.send(err);
+      //   res.json(piezasRows);
+      // 14 - cambiamos la respuesta
+      res.json("<h2>Registro realizado con éxito</h2>");
+    });
+  });
+});
+
+// 15 - Ruta para Eliminar
+routes.delete("/:id", (req, res) => {
+  req.getConnection((error, conexion) => {
+    if (error) return res.send(error);
+    conexion.query(
+      "DELETE FROM personal WHERE id_personal = ?",
+      [req.params.id],
+      (err, piezasRows) => {
+        if (err) return res.send(err);
+        res.json("<h2>Registro eliminado con éxito</h2>");
+      }
+    );
+  });
+});
+
+
+routes.put("/:id", (req, res) => {
+  req.getConnection((error, conexion) => {
+    if (error) return res.send(error);
+    conexion.query(
+      "UPDATE personal SET ? WHERE id_personal = ?",
+      [req.body, req.params.id],
+      (err, piezasRows) => {
+        if (err) return res.send(err);
+        res.json("<h2>Regsitro actualizado con éxito</h2>");
+      }
+    );
+  });
+});
+
+
+
+
+
+
+
+/*
 /**
  * @swagger
  * components:
@@ -59,7 +145,7 @@ const routes = express.Router();
  *                 $ref: '#/components/schemas/personal'
  */
 
-routes.get("/", (req, res) => {
+/*routes.get("/", (req, res) => {
   //   res.send("<h1>Lista completa de las piezas de la coleccion</h1>");
   req.getConnection((error, conexion) => {
     if (error) return res.send(error);
@@ -71,7 +157,7 @@ routes.get("/", (req, res) => {
 });
 
 
-routes.get("/:id", (req, res) => {
+/*routes.get("/:id", (req, res) => {
   req.getConnection((error, conexion) => {
     console.log(req.params.id);
     if (error) return res.send(error
@@ -108,7 +194,7 @@ routes.get("/:id", (req, res) => {
  */
 
 // 11 - Ruta para insertar
-routes.post("/", (req, res) => {
+/*routes.post("/", (req, res) => {
   req.getConnection((error, conexion) => {
     if (error) return res.status(500).json({ error: "Error de conexión a la base de datos" });
 
@@ -148,7 +234,7 @@ routes.post("/", (req, res) => {
 
 
 // 15 - Ruta para Eliminar
-routes.delete("/:id", (req, res) => {
+/*routes.delete("/:id", (req, res) => {
   req.getConnection((error, conexion) => {
     if (error) return res.send(error);
     conexion.query(
@@ -199,7 +285,7 @@ routes.delete("/:id", (req, res) => {
  */
 
 // 15 - Ruta para Actualizar
-routes.put("/:id", (req, res) => {
+/*routes.put("/:id", (req, res) => {
   req.getConnection((error, conexion) => {
     if (error) return res.send(error);
     conexion.query(
@@ -212,6 +298,6 @@ routes.put("/:id", (req, res) => {
     );
   });
 });
-
+*/
 export default routes;
 
