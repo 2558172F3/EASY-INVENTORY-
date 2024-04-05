@@ -9,7 +9,7 @@ import clientrouts from "./routes/clientroutes.js";
 import persroutes from "./routes/persroutes.js";
 import rolroutes from "./routes/rolroutes.js";
 import proveedorlist from "./routes/proveedor.js";
-
+import clientelist from "./routes/clientesroutes.js";
 
 
 
@@ -46,6 +46,7 @@ app.use("/personal", persroutes);
 app.use("/rol", rolroutes);
 app.use("/proveedor", proveedorlist);
 app.use("/auth",authRoutes);
+app.use("/cliente", clientelist);
 
 // 5-  Creo la ruta base
 app.get("/", (req, res) => {
