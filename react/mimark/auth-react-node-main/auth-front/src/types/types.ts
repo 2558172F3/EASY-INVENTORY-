@@ -52,3 +52,21 @@ export interface ClientesPost {
   ciudad:        string;
 
 }
+
+
+export interface ProveedorListPost {
+  Nombre:         string;
+  Dirección:      string;
+  Teléfono:        number;
+  Ciudad:          string;
+  Acciones:        string;
+}
+
+export interface ProveedorList {
+  
+  Nombre:         string;
+  Dirección:      string;
+  Teléfono:        number;
+  Ciudad:          string;
+  Acciones:        string;
+}

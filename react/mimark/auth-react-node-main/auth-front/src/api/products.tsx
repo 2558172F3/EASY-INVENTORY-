@@ -50,7 +50,7 @@ export const useEditProduct = async (id:string,producto:product) => {
 
 export const useDeleteProduct = async (id:number) => {
     try {
-        const response = await apiClient.put(`/productos/del/${id}`)
+        const response = await apiClient.put(`/productos/delet/${id}`)
         return response.status
     } catch (error) {
         console.log(error)

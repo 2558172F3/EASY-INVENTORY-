@@ -106,6 +106,8 @@ export default function Dashboard() {
                     <td>{producto1.Cantidad}</td>
                     <td>{producto1.Precio}</td>
                     <td><button className="btn btn-warning"  data-bs-toggle="modal" data-bs-target={`#product-edit-${producto1.ID_Producto}`} id="shown.bs.modal" >editar</button></td>
+                    <td><button className="btn btn-danger"  data-bs-toggle="modal" data-bs-target={`#product-delet-${producto1.ID_Producto}`} id="shown.bs.modal" >eliminar</button></td>
+
                     <td>
                     <button  className="btn btn-danger" onClick={()=>disminuir(producto1.ID_Producto)}> {producto1.Cantidad===0 ? "no hay stock" : "-"} </button>
                     <button  className="btn btn-success" onClick={()=>aumentar(producto1.ID_Producto)}> + </button>
