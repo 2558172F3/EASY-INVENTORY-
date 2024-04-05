@@ -1,10 +1,11 @@
 
-import apiProveedorList from '../apiProveedorList'
-import { ProveedorList, ProveedorListPost } from '../types/types'
+import apiProveedor from '../apiProveedor'
+import { Proveedor, ProveedorPost } from '../types/types'
+import apiClient from '../apiClient'
 
-export const useGetProveedorList = async () => {
+export const useGetProveedor = async () => {
     try {
-        const response = await apiProveedorList.get<ProveedorList[]>('/proveedor')
+        const response = await apiProveedor.get<Proveedor[]>('/proveedor')
         return response.data
     } catch (error) {
         console.log(error)
@@ -13,9 +14,9 @@ export const useGetProveedorList = async () => {
   return 
 }
 
-export const usePutProveedorList = async () => {
+export const usePutProveedor = async () => {
     try {
-        const response = await apiProveedorList.put<ProveedorList[]>('/proveedor')
+        const response = await apiProveedor.put<Proveedor[]>('/proveedor')
         return response.data
     } catch (error) {
         console.log(error)
@@ -24,9 +25,9 @@ export const usePutProveedorList = async () => {
   return 
 }
 
-export const usePostProveedorList = async (proveedor:ProveedorListPost) => {
+export const usePostProveedor = async (proveedor:ProveedorPost) => {
     try {
-        const response = await apiProveedorList.post<ProveedorList[]>('/proveedor',proveedor)
+        const response = await apiProveedor.post<Proveedor[]>('/proveedor',proveedor)
         return response.data
     } catch (error) {
         console.log(error)
@@ -36,7 +37,7 @@ export const usePostProveedorList = async (proveedor:ProveedorListPost) => {
 }
 export const useproveedorById = async (id:string) => {
     try {
-        const response = await apiProveedorList.get<ProveedorList[]>(`/proveedor/${id}`)
+        const response = await apiProveedor.get<Proveedor[]>(`/proveedor/${id}`)
         return response.data
     } catch (error) {
         console.log(error)

@@ -29,21 +29,22 @@ const CustomerPage = () => {
         <table className="table table-striped">
           <thead>
             <tr>
+            <th>in_nombre</th>
               <th>Nombre</th>
-              <th>Dirección</th>
-              <th>Teléfono</th>
+              <th>Direccion</th>
+              <th>Telefono</th>
               <th>Ciudad</th>
             </tr>
           </thead>
           <tbody>
             {proveedor.map((proveedor) => (
-              <tr key={proveedor.nombre}>
-                <td>{proveedor.nombre}</td>
-                <td>{proveedor.direccion}</td>
-                <td>{proveedor.telefono}</td>
-                <td>{proveedor.ciudad}</td>
+              <tr key={proveedor.id_nombre}>
+                <td>{proveedor.Nombre}</td>
+                <td>{proveedor.Direccion}</td>
+                <td>{proveedor.Telefono}</td>
+                <td>{proveedor.Ciudad}</td>
               </tr>
-           
+               
             ))}
           </tbody>
         </table>

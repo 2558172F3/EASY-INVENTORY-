@@ -1,6 +1,6 @@
 
-import apiPers from '../apiPers'
 import { personal, personalDelete, personalPost } from '../types/types'
+import apiClient from '../apiClient'
 
 export const useGetPersonal = async () => {
     try {

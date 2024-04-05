@@ -62,13 +62,12 @@ export interface ProveedorListPost {
   Acciones:        string;
 }
 
-export interface ProveedorList {
-  
-  Nombre:         string;
-  Dirección:      string;
-  Teléfono:        number;
-  Ciudad:          string;
-  Acciones:        string;
+export interface Proveedor {
+  id_proveedor: number;
+  nombre:       string;
+  direccion:    string;
+  telefono:     number;
+  ciudad:       string;
 }
 
 export interface personal {  
