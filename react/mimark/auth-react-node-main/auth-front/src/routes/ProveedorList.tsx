@@ -1,17 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react'; 
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useGetProveedor, usePostProveedor } from '../api/proveedorlist'; // Importa las funciones de API
-import { Proveedor } from '../types/types';
+import { useGetProveedor, usePostProveedor, useDeleteProveedor, usePutProveedor } from '../api/proveedorlist.tsx';
 import PortalLayout from '../layout/PortalLayout';
 
-interface ProveedorListProps {
-  data: Proveedor[];
-  handleEdit: (id: number) => void;
-  handleDelete: (id: number) => void;
-}
-
 const CustomerPage = () => {
-  const { data: proveedor, refetch } = useQuery({ // Añade refetch para actualizar los datos después de agregar un proveedor
+  const { data: proveedor, refetch } = useQuery({
     queryKey: ['proveedor'],
     queryFn: useGetProveedor,
     staleTime: 1000 * 60 * 30,
@@ -20,33 +13,34 @@ const CustomerPage = () => {
   });
 
   const [formData, setFormData] = useState({
+    id_proveedor: '',
     nombre: '',
     direccion: '',
     telefono: '',
-    ciudad: ''
+    ciudad: '',
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => { // Modifica handleSubmit para que sea asíncrono
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      // Enviar los datos del nuevo proveedor al servidor
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       await usePostProveedor(formData);
-      // Actualizar la lista de proveedores refetch
       await refetch();
-      // Limpiar el formulario después de enviar
+      alert('¡Proveedor creado exitosamente!');
       setFormData({
+        id_proveedor: '',
         nombre: '',
         direccion: '',
         telefono: '',
-        ciudad: ''
+        ciudad: '',
       });
     } catch (error) {
       console.error('Error al agregar proveedor:', error);
@@ -57,14 +51,52 @@ const CustomerPage = () => {
     return <div>Cargando...</div>;
   }
 
-  const eliminarProveedor = (id: number) => {
-    console.log(`Eliminando proveedor con ID: ${id}`);
-    // Lógica para eliminar un proveedor...
+  const handleDeleteProveedor = async (id: string | number) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const success = await useDeleteProveedor(id);
+
+    if (success) {
+      alert('Proveedor eliminado correctamente.');
+      await refetch();
+    } else {
+      alert('Error al eliminar el proveedor.');
+    }
   };
 
-  const editarProveedor = (id: number) => {
+  const editarProveedor = async (id: number | string) => {
     console.log(`Editando proveedor con ID: ${id}`);
-    // Lógica para editar un proveedor...
+    const proveedorEditado = proveedor.find((prov) => prov.id_proveedor === id);
+    if (proveedorEditado) {
+      setFormData(proveedorEditado);
+    }
+  };
+
+  const handleUpdateProveedor = async () => {
+    try {
+      const hasChanged =
+        formData.id_proveedor !== '' ||
+        formData.nombre !== '' ||
+        formData.direccion !== '' ||
+        formData.telefono !== '' ||
+        formData.ciudad !== '';
+
+      if (hasChanged) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        await usePutProveedor(formData);
+        await refetch();
+        alert('Proveedor actualizado exitosamente!');
+      }
+
+      setFormData({
+        id_proveedor: '',
+        nombre: '',
+        direccion: '',
+        telefono: '',
+        ciudad: '',
+      });
+    } catch (error) {
+      console.error('Error al actualizar proveedor:', error);
+    }
   };
 
   return (
@@ -88,8 +120,8 @@ const CustomerPage = () => {
             <input type="text" name="ciudad" value={formData.ciudad} onChange={handleChange} />
           </label>
           <button type="submit">Agregar Proveedor</button>
+          <button type="button" onClick={handleUpdateProveedor}>Actualizar Proveedor</button>
         </form>
-
         <table className="table table-striped">
           <thead>
             <tr>
@@ -102,18 +134,20 @@ const CustomerPage = () => {
             </tr>
           </thead>
           <tbody>
-            {proveedor.map((proveedor) => (
-              <tr key={proveedor.id_proveedor}>
-                <td>{proveedor.id_proveedor}</td>
-                <td>{proveedor.nombre}</td>
-                <td>{proveedor.direccion}</td>
-                <td>{proveedor.telefono}</td>
-                <td>{proveedor.ciudad}</td>
+            {proveedor.map((prov) => (
+              <tr key={prov.id_proveedor}>
+                <td>{prov.id_proveedor}</td>
+                <td>{prov.nombre}</td>             
+
+                <td>{prov.direccion}</td>
+                <td>{prov.telefono}</td>
+                <td>{prov.ciudad}</td>
                 <td>
-                  <button onClick={() => editarProveedor(proveedor.id_proveedor)}>Editar</button>
+                  <button onClick={() => editarProveedor(prov.id_proveedor)}>Editar</button>
                 </td>
                 <td>
-                  <button onClick={() => eliminarProveedor(proveedor.id_proveedor)}>Eliminar</button>
+                <button onClick={() => handleDeleteProveedor(prov.id_proveedor)}>Eliminar</button>
+
                 </td>
               </tr>
             ))}
@@ -122,6 +156,7 @@ const CustomerPage = () => {
       </div>
     </PortalLayout>
   );
-}
+};
 
 export default CustomerPage;
+

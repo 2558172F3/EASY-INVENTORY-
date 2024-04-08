@@ -63,7 +63,15 @@ export interface ProveedorListPost {
 }
 
 export interface Proveedor {
-  id_proveedor: number;
+  id_proveedor: string;
+  nombre:       string;
+  direccion:    string;
+  telefono:     number;
+  ciudad:       string;
+}
+
+export interface Proveedordelet {
+  id_proveedor: string;
   nombre:       string;
   direccion:    string;
   telefono:     number;
@@ -81,6 +89,15 @@ export interface personal {
 }
 
 export interface personalPost {  
+  id_personal:   number,
+  rol:           number;
+  nombre:        string;
+  apellidos:     string;
+  telefono:      string;
+  correo:        string;
+  
+}
+export interface personaldelet {  
   id_personal:   number,
   rol:           number;
   nombre:        string;
