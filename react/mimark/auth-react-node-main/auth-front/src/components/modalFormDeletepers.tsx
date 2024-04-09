@@ -8,7 +8,7 @@ const DeleteModalCorreo = ({ handleDelete, id }) => {
     handleDelete(correo);
     
     
-    setCorreo(''); // Limpiar el campo de correo después de la eliminación
+    setCorreo(''); // Limpiar el campos
     alert("eliminado")
   };
 

@@ -60,11 +60,11 @@ const CustomerPage = () => {
 
  
     
-  const handleDelete = async (correo: string) => {
+  const handleDelete = async (id: string) => {
     try {
-      await useDeletePersonal(correo);
+      await useDeletePersonal(id);
       await refetch();
-      console.log(`Registro con ID ${correo} eliminado exitosamente.`);
+      console.log(`Registro con ID ${id} eliminado exitosamente.`);
       
     } catch (error) {
       console.error('Error al eliminar el registro:', error);
@@ -144,13 +144,13 @@ const CustomerPage = () => {
                   {/* Delete button and modal */}
                   <button
                     className="btn btn-danger"
-                    onClick={() => handleDelete(personal1.correo)}
+                    onClick={() => handleDelete(personal1.id_personal.toString())}
                     data-bs-toggle="modal"
                     data-bs-target={`#delete-modal-${personal1.id_personal}`}
                   >
                     Eliminar
                   </button>
-                  <DeleteModalCorreo id={`delete-modal-${personal1.correo}`} handleDelete={undefined} />
+                  <DeleteModalCorreo id={`delete-modal-${personal1.id_personal}`} handleDelete={undefined} />
                 </td>
                 </tr>
               </React.Fragment>
