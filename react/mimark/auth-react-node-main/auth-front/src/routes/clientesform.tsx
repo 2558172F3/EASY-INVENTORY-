@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { usePostClientes } from '../api/client';
+import PortalLayout from '../layout/PortalLayout';
 
 const ClienteForm: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -35,6 +36,7 @@ const ClienteForm: React.FC = () => {
 //   };
 
   return (
+    <PortalLayout>
     <div className="container">
         <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formNombre">
@@ -67,6 +69,7 @@ const ClienteForm: React.FC = () => {
         </Button>
         </Form>
     </div>
+    </PortalLayout>
   );
 };
 
