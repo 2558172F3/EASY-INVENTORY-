@@ -25,7 +25,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <a className="nav-link" href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal" id="shown.bs.modal">Registrar un empleado</a>
+            <a className="nav-link" href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal" id="shown.bs.modal">Creación de usuario</a>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/clients">Ver clientes</Link>
@@ -36,9 +36,9 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
           <li className="nav-item">
             <Link className="nav-link" to="/personal">Gestion del Personal</Link>
           </li>
-          {/* <li className="nav-item">
+          /* <li className="nav-item">
             <Link className="nav-link" to="/persform">Gestion del Personal</Link>
-          </li> */}
+          </li> */
           <li className="nav-item">
             <Link className="nav-link" to="/proveedor">Gestion Proveedor</Link>
           </li>
