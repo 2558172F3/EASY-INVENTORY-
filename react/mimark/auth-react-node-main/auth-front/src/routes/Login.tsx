@@ -30,9 +30,12 @@ export const Login: React.FC =  () => {
     }
   return (
     <DefaultLayout>
+      
+    <img className="imagen" style={{transform:"rotate(-10deg)", marginLeft: "30%", position:"relative"  }} width="100px" src="https://media.giphy.com/media/UGEEeGSBUSgnQ9bdXc/giphy.gif" />
+
       <div className="login">
         <form onSubmit={handleSubmit} className="form">
-          <h1 className="titulo-page">Login</h1>
+          <h1 className="titulo-page" >Login</h1>
           {/* {!!errorResponse && <div className="errorMessage">{errorResponse}</div>} */}
           <label>Username</label>
           <input

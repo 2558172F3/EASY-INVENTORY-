@@ -2,12 +2,10 @@
     background-image: -moz-radial-gradient();
     padding: 50px;
     scroll-margin-top: 100px;
+    
 }
+ 
 
-.botones{
-border-radius: 1;
-
-}
 
 .gif {
     width: 100px; 
