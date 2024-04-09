@@ -11,14 +11,13 @@ import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 import Profile from "./routes/Profile.tsx";
 import  ClientesForm  from "./routes/clientesform.tsx";
 import  ClienteInfo  from "./routes/clientesId.tsx";
-import PersForm from "./routes/persform.tsx";
-import PersonalInfo from "./routes/persld.tsx";
-import Perss from "./routes/perss.tsx"
 import  ProveedorList  from "./routes/ProveedorList.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./index.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import PersonalList from "./routes/personalList.tsx";
+import RolList from "./routes/RolList.tsx";
 
 const queryClient = new QueryClient();
 
@@ -44,18 +43,13 @@ const router = createBrowserRouter([
     element:<ClienteInfo/>
   },
   {
-    path:"/perss",
-    element:<Perss/>
-  },
-  {
-    path:"/persform",
-    element:<PersForm/>
-  },
-
-  {
-    path:"/personal/:id",
-    element:<PersonalInfo/>
-  },
+    path:"/personal",
+     element:<PersonalList/>
+   },  
+   {
+    path:"/rol",
+     element:<RolList/>
+   }, 
 
 
 

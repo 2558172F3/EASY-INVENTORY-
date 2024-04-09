@@ -51,30 +51,48 @@ routes.post("/", (req, res) => {
 });
 
 // 15 - Ruta para Eliminar
-routes.delete("/:id", (req, res) => {
+routes.delete("/del/:id", (req, res) => {
+  console.log(req.body.personal);
+  const {Correo } = req.body.personal
   req.getConnection((error, conexion) => {
-    if (error) return res.send(error);
+    if (error) {
+      return res.send(error);
+    }
     conexion.query(
-      "DELETE FROM personal WHERE id_personal = ?",
-      [req.params.id],
+      "DELETE FROM personal WHERE correo = ?",
+      [Correo, req.params.Correo],
       (err, piezasRows) => {
-        if (err) return res.send(err);
-        res.json("<h2>Registro eliminado con éxito</h2>");
+        if (err) {
+          return res.send(err);
+        }
+        
+        res.status(200).json("<h2>Producto ELIMINADO con éxito</h2>");
       }
     );
   });
 });
 
 
+
+
 routes.put("/:id", (req, res) => {
-  req.getConnection((error, conexion) => {
-    if (error) return res.send(error);
+  console.log(req.body.personal)
+  const { Rol, Nombre, Apellidos, Telefono, Correo } = req.body.personal
+    req.getConnection((error, conexion) => {
+    if (error)
+     {return res.send(error);
+    
+    }
     conexion.query(
-      "UPDATE personal SET ? WHERE id_personal = ?",
-      [req.body, req.params.id],
+      "UPDATE personal SET  rol=?, nombre=?, apellidos=?, telefono=?, correo=?   WHERE id_personal = ?",
+      
+      [Rol,Nombre, Apellidos,Telefono,Correo, req.params.id],
       (err, piezasRows) => {
-        if (err) return res.send(err);
-        res.json("<h2>Regsitro actualizado con éxito</h2>");
+        if (err) {return res.send(err);
+          console.log(err);
+        }
+
+        res.json("<h2>Registro actualizado con éxito</h2>");
       }
     );
   });

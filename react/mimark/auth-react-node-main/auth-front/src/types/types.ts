@@ -78,12 +78,36 @@ export interface Proveedordelet {
   ciudad:       string;
 }
 
+export interface Personal {  
+  id_personal:   number;
+  rol:           number; 
+  nombre:        string;
+  apellidos:     string;
+  telefono:      string;
+  correo:        string;
+          
+  
+}
 export interface personal {  
   rol:           number; 
   nombre:        string;
   apellidos:     string;
   telefono:      string;
   correo:        string;
+          
+  
+}
+
+export interface Rol {  
+  id_rol     :   number;            
+  nombre     :   string;         
+  
+}
+
+export interface Rol2 {  
+  id_rol     :   number;            
+  nombre     :   string;
+  
           
   
 }
