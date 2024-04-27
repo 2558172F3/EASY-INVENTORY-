@@ -2,20 +2,52 @@
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  color: black;
+  
 }
 
 body {
   padding: 0;
   margin: 0;
+  background-image: url(../src/img/cajas-carton-equipo-interior-oficina-espacio-abierto-blanco-espacioso-concepto-mudanza_933530-709.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  
+  
+
+  
 }
 
 label {
   display: block;
+  color:black;
+  font-weight: bold;
+  
 }
 
+
+
 .form {
+  
   width: 400px;
   margin: 0 auto;
+  background-color: rgb(243, 236, 236);
+  opacity: 80%;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 05px;
+  padding-bottom: 15px;
+  border-radius: 10%;
+  margin-top: 20px;
+  
+  
+  
+}
+
+p{
+  color: rgb(17, 1, 1);
 }
 
 input[type="text"],
@@ -25,20 +57,27 @@ input[type="text"],
   box-sizing: border-box;
   width: 100%;
   margin: 5px 0 10px 0;
+  opacity: 50%;
+  border-color: black;
 }
 
 input[type="button"],
 button {
-  background-color: rgb(39, 131, 212);
+  
+  background-color: rgb(4, 3, 17);
   padding: 10px;
-  border: 0;
+  border: 01;
   min-width: 100px;
   border-radius: 5px;
-  color: white;
+  color: rgb(243, 236, 236);
 }
 
 nav {
   background-color: #eee;
+  opacity: 70%;
+  color: black;
+  
+  
 }
 
 nav ul {
@@ -51,17 +90,23 @@ nav ul li {
 }
 
 a {
-  color: rgb(97, 28, 161);
+  color: rgb(4, 0, 14);
   text-decoration: none;
+  border-top: aqua;
+  font-weight: bold;
 }
 
 .dashboard {
   width: 500px;
   margin: auto;
+   
+  
+  
 }
 
 .errorMessage {
   background-color: #f2dede;
   color: #a94442;
   padding: 10px;
+  
 }

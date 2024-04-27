@@ -5,7 +5,9 @@ import { Personal } from '../types/types';
 import PortalLayout from '../layout/PortalLayout';
 import { EditModal } from '../components/EditModal';
 
-;
+
+
+
 import React from 'react';
 import DeleteModalCorreo from '../components/modalFormDeletepers';
 
@@ -70,9 +72,12 @@ const CustomerPage = () => {
       console.error('Error al eliminar el registro:', error);
     }
   };
+  
   return (
     <PortalLayout>
-      <div className="container">
+      <div className="container personal-list-container">
+      <img className="imagen"  width="100px" src="https://media.giphy.com/media/UGEEeGSBUSgnQ9bdXc/giphy.gif" />
+
       <form onSubmit={handleSubmit}>
           <label>
             Rol:
@@ -97,7 +102,7 @@ const CustomerPage = () => {
           {/* Resto del formulario de entrada de datos */}
           <button type="submit">Agregar</button>
         </form>
-
+      <br />
         <table className="table table-striped">
           <thead>
             <tr>
@@ -147,8 +152,9 @@ const CustomerPage = () => {
                     onClick={() => handleDelete(personal1.id_personal.toString())}
                     data-bs-toggle="modal"
                     data-bs-target={`#delete-modal-${personal1.id_personal}`}
+                    
                   >
-                    Eliminar
+                    Estado
                   </button>
                   <DeleteModalCorreo id={`delete-modal-${personal1.id_personal}`} handleDelete={undefined} />
                 </td>

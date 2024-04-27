@@ -147,11 +147,13 @@ const CustomerPage = () => {
                 </td>
                 <td>
                 <button onClick={() => handleDeleteProveedor(prov.id_proveedor)}>Eliminar</button>
-
+                    
                 </td>
               </tr>
+              
             ))}
           </tbody>
+          
         </table>
       </div>
     </PortalLayout>
