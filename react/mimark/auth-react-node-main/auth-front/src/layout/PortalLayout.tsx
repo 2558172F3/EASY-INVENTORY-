@@ -28,6 +28,9 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
             <a className="nav-link" href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal" id="shown.bs.modal">Creación de usuario</a>
           </li>
           <li className="nav-item">
+            <Link className="nav-link" to="/factura">invoicing</Link>
+          </li>
+          <li className="nav-item">
             <Link className="nav-link" to="/clients">Ver clientes</Link>
           </li>
           <li className="nav-item">

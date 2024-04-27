@@ -2,6 +2,10 @@
 import express from "express";
 const routes = express.Router();
 
+
+
+
+
 routes.get("/", (req, res) => {
   //   res.send("<h1>Lista completa de las piezas de la coleccion</h1>");
   req.getConnection((error, conexion) => {

@@ -11,7 +11,7 @@ const clientelist = express.Router();
    *       500:
    *         description: Error interno del servidor
    */
-clientelist.get("/cliente", (req, res) => {
+clientelist.get("/", (req, res) => {
        req.getConnection((error, conexion) => {
       if (error) return res.send(error);
       conexion.query("SELECT * FROM cliente", (err, piezasRows) => {

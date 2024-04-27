@@ -11,12 +11,13 @@ import rolroutes from "./routes/rolroutes.js";
 import proveedorlist from "./routes/proveedor.js";
 import clientelist from "./routes/clientesroutes.js";
 import categoria from "./routes/categoria.js";
-
+import invoicing from "./routes/invoicing.js";
 
 
 
 // 12 - Agrego el middleware para parser los datos a JSON, OJO se debe instalar npm i body-parser
 import bodyParser from "body-parser";
+
 
 
 // 6 - Definimos la constante para almacenar los parametros de conexion a la BdD ==> const dbOptions
@@ -49,7 +50,7 @@ app.use("/proveedor", proveedorlist);
 app.use("/auth",authRoutes);
 app.use("/cliente", clientelist);
 app.use("/categoria", categoria);
-
+app.use("/factura", invoicing);
 // 5-  Creo la ruta base
 app.get("/", (req, res) => {
   res.send("Bienvenido a mi API conectandome a MySQL...");

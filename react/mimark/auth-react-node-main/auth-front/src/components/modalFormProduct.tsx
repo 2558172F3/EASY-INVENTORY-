@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { useCreateProduct } from "../api/products";
+import { useCreateProduct } from "../api/products"
 
 interface product {
     

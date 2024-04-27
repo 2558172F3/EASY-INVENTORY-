@@ -138,7 +138,6 @@ const CustomerPage = () => {
               <tr key={prov.id_proveedor}>
                 <td>{prov.id_proveedor}</td>
                 <td>{prov.nombre}</td>             
-
                 <td>{prov.direccion}</td>
                 <td>{prov.telefono}</td>
                 <td>{prov.ciudad}</td>
