@@ -34,7 +34,7 @@ export const Login: React.FC =  () => {
         <form onSubmit={handleSubmit} className="form">
           <h1 className="titulo-page">Login</h1>
           {/* {!!errorResponse && <div className="errorMessage">{errorResponse}</div>} */}
-          <label>Username</label>
+          <label>Correo</label>
           <input
             name="username"
             type="text"
