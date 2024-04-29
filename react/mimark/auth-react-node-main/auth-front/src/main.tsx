@@ -12,6 +12,7 @@ import Profile from "./routes/Profile.tsx";
 import  ClientesForm  from "./routes/clientesform.tsx";
 import  ClienteInfo  from "./routes/clientesId.tsx";
 import  ProveedorList  from "./routes/ProveedorList.jsx";
+import  FacturaList    from "./routes/FacturaList.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./index.css";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path:"/factura",
+    element:<FacturaList/>
   },
   {
     path:"/clients",

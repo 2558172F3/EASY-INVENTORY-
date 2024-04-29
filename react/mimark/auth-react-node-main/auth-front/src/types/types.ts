@@ -26,13 +26,25 @@ access: string;
 error?: string;
 }
 
-export interface Productos {
-  ID_Producto:  number;
-  ID_Categoria: number;
-  Nombre:       string;
-  Precio:       number;
-  Cantidad:     number;
+export interface FacturaVenta {
+  ID_Factura:   number;
+  fecha_compra: Date;
+  vendedor:     string;
+  apellidos:    string;
+  cliente:      string;
+  ciudad:       string;
+  telefono:     string;
+  correo:       string;
+  productos:    Producto[];
 }
+
+export interface Producto {
+  id_producto: number;
+  cantidad:    number;
+  Nombre:      string;
+  Precio:      number;
+}
+
 
 export interface Clientes {
   nombre:        string;
@@ -53,9 +65,18 @@ export interface ClientesPost {
 
 }
 
+export interface Proveedor {
+  id_proveedor: number;
+  nombre:       string;
+  direccion:    string;
+  telefono:     number;
+  ciudad:       string;
+}
+
+
 
 export interface ProveedorListPost {
-  Nombre:         string;
+  Nombre:         number;
   Dirección:      string;
   Teléfono:        number;
   Ciudad:          string;
@@ -63,7 +84,7 @@ export interface ProveedorListPost {
 }
 
 export interface Proveedor {
-  id_proveedor: string;
+  id_proveedor: number;
   nombre:       string;
   direccion:    string;
   telefono:     number;
@@ -71,7 +92,7 @@ export interface Proveedor {
 }
 
 export interface Proveedordelet {
-  id_proveedor: string;
+  id_proveedor: number;
   nombre:       string;
   direccion:    string;
   telefono:     number;

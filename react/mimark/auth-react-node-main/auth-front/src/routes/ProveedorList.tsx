@@ -51,7 +51,7 @@ const CustomerPage = () => {
     return <div>Cargando...</div>;
   }
 
-  const handleDeleteProveedor = async (id: string | number) => {
+  const handleDeleteProveedor = async (id: number) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const success = await useDeleteProveedor(id);
 

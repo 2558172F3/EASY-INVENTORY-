@@ -25,8 +25,8 @@ const dbOptions = {
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "Ibague2024*",
-  database: "minimercad2",
+  password: "",
+  database: "minimercado",
 };
 
 //2 - Creamos la instancia del servidor
@@ -51,6 +51,8 @@ app.use("/auth",authRoutes);
 app.use("/cliente", clientelist);
 app.use("/categoria", categoria);
 app.use("/factura", invoicing);
+app.use("/factura_producto", invoicing);
+
 // 5-  Creo la ruta base
 app.get("/", (req, res) => {
   res.send("Bienvenido a mi API conectandome a MySQL...");
