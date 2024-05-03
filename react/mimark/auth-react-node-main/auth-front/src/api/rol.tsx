@@ -13,7 +13,7 @@ interface rol {
 }
 
 
-export const useGetRol = async () => {
+export const useGetRol= async () => {
     try {
         const response = await apiClient.get<rol[]>('/rol')
         return response.data

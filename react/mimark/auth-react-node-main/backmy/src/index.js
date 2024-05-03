@@ -15,6 +15,7 @@ import invoicing from "./routes/invoicing.js";
 
 
 
+
 // 12 - Agrego el middleware para parser los datos a JSON, OJO se debe instalar npm i body-parser
 import bodyParser from "body-parser";
 

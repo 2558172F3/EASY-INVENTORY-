@@ -72,6 +72,13 @@ export interface Proveedor {
   telefono:     number;
   ciudad:       string;
 }
+export interface Categoria {
+  id_categoria: number;
+  nombre:       string;
+
+}
+
+
 
 
 
