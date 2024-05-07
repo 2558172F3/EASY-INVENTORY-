@@ -12,9 +12,11 @@ import Profile from "./routes/Profile.tsx";
 import  ClientesForm  from "./routes/clientesform.tsx";
 import  ClienteInfo  from "./routes/clientesId.tsx";
 import  ProveedorList  from "./routes/ProveedorList.jsx";
+import Categoria  from "./routes/categoriaform.tsx";
 import  FacturaList    from "./routes/FacturaList.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 import "./index.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import PersonalList from "./routes/personalList.tsx";
@@ -55,6 +57,11 @@ const router = createBrowserRouter([
     path:"/rol",
      element:<RolList/>
    }, 
+   {
+    path:"/Categoria",
+     element:<Categoria/>
+   }, 
+
 
 
 

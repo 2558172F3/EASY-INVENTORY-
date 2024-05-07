@@ -4,6 +4,7 @@ import { useGetRol, usePostRol, useDeleteRol } from '../api/rol'; // Importa las
 import { Rol } from '../types/types';
 import PortalLayout from '../layout/PortalLayout';
 import { EditModalRol} from '../components/EditModalRol';
+import { usePostCategoria } from '../api/categor';
 
 
 
@@ -43,7 +44,7 @@ const CustomerPage = () => {
     e.preventDefault();
     try {
       // Enviar los datos del nuevo proveedor al servidor
-      await usePostRol(formData);
+      await usePostCategoria(formData);
       // Actualizar la lista de proveedores refetch
       await refetch();
       // Limpiar el formulario después de enviar
