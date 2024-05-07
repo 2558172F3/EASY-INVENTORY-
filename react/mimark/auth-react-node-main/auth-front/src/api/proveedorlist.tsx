@@ -12,16 +12,7 @@ export const useGetProveedor = async () => {
   return 
 }
 
-export const usePutProveedor = async () => {
-    try {
-        const response = await apiClient.put<Proveedor[]>('/proveedor/:id')
-        return response.data
-    } catch (error) {
-        console.log(error)
-        return
-    }
-  return 
-}
+
 
 export const usePostProveedor = async (proveedor: Proveedor) => {
     try {
@@ -58,11 +49,12 @@ export const useDeleteProveedor = async (id: number ) => {
 
 export const useUpdateProveedor = async (id: number, newData: Partial<Proveedor>) => {
     try {
-      const response = await apiClient.put<Proveedor[]>(`/proveedor/${id}`, newData); // Realiza una solicitud PUT al endpoint /proveedor/{id} con los nuevos datos
+      const response = await apiClient.put(`/proveedor/${id}`, newData); // Realiza una solicitud PUT al endpoint /proveedor/{id} con los nuevos datos
       return response.data; // Devuelve los datos actualizados del proveedor
     } catch (error) {
       console.log(error); // Registra cualquier error en la consola
       return null; // Retorna null en caso de error
+      throw error;
     }
   };
 

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useGetfactura, } from '../api/facturalist.tsx';
 import PortalLayout from '../layout/PortalLayout';
-import { Producto } from '../types/types.ts';
+
 
 const CustomerPage = () => {
   const { data: factura,  } = useQuery({
@@ -50,8 +50,19 @@ const CustomerPage = () => {
                 <td>{fact.telefono}</td>
                 <td>{fact.correo}</td>
                 {       
-               
-                
+              <td>
+              {fact.productos.map((product, index) => (
+                <div key={index}>
+                  <span> - ID: {product.id_producto}</span>
+                  <span>{product.Nombre}</span>
+                  <span> - Precio: {product.Precio}</span>
+                  
+                  {index < fact.productos.length - 1 && ", "}
+                </div>
+              ))}
+            </td>
+            
+             
                 
                 
                 /* <td>{
