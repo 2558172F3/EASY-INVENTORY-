@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useGetfactura, } from '../api/facturalist.tsx';
 import PortalLayout from '../layout/PortalLayout';
+import { Producto} from '../types/types.ts';
+import FacturaVenta from '../components/facturaVenta.tsx';
 
 
 const CustomerPage = () => {
@@ -34,7 +36,7 @@ const CustomerPage = () => {
               <th>telefono</th>
               <th>correo</th>
               <th>productos</th>
-                                          
+              <th>Total</th>                            
             </tr>
           </thead>
           <tbody>
@@ -51,27 +53,27 @@ const CustomerPage = () => {
                 <td>{fact.correo}</td>
                 {       
               <td>
-              {fact.productos.map((product, index) => (
-                <div key={index}>
-                  <span> - ID: {product.id_producto}</span>
-                  <span>{product.Nombre}</span>
-                  <span> - Precio: {product.Precio}</span>
-                  
-                  {index < fact.productos.length - 1 && ", "}
-                </div>
-              ))}
+              <th >Producto</th>
+              <th className='px-5'>Precio</th>
+              {
+                fact.productos.map((product:Producto) => (
+                  <tr key={product.id_producto}>
+                    <td>{product.Nombre}</td>
+                    <td className='px-5'>{product.Precio}</td>
+                  </tr>
+                ))
+              }
+              
             </td>
-            
-             
-                
-                
+
                 /* <td>{
                   
                     fact.productos.map((product:Producto) =>(<td>product.nombre</td>))
                   
                   }</td> */}
-          
-                                             
+                <td>
+                  {fact.productos.reduce((acc, product) => acc + product.Precio, 0)}
+                </td>
                 <td>
                 </td>
                 <td>
@@ -83,6 +85,9 @@ const CustomerPage = () => {
           </tbody>
           
         </table>
+      </div>
+      <div>
+        <FacturaVenta />
       </div>
     </PortalLayout>
   );
