@@ -8,7 +8,10 @@ routes.get("/", (req, res) => {
   //   res.send("<h1>Lista completa de las piezas de la coleccion</h1>");
   req.getConnection((error, conexion) => {
     if (error) return res.send(error);
-    conexion.query("SELECT * FROM producto", (err, productosRows) => {
+    conexion.query(`SELECT producto.ID_Producto, producto.Nombre, producto.Precio, producto.Cantidad,producto.ID_categoria, categoria.Nombre AS Nombre_Categoria
+    FROM producto
+    INNER JOIN categoria ON producto.ID_Categoria = categoria.ID_Categoria;
+    `, (err, productosRows) => {
       if (err) return res.send(err);
       res.json(productosRows);
     });
@@ -50,38 +53,6 @@ routes.post("/", (req, res) => {
   });
 });
 
-routes.put("/aumentar/:id", (req, res) => {
-  req.getConnection((error, conexion) => {
-    const cantidad =1
-    conexion.query(
-      "UPDATE producto SET Cantidad = Cantidad + ? WHERE id_producto = ? ", [cantidad,req.params.id],(err,aumento)=>{
-        if (err) {
-          console.log(err);
-        }
-        res.json("aumento");
-      }
-    )
-        
-      }
-    );
-  });
-
-  routes.put("/disminuir/:id", (req, res) => {
-    req.getConnection((error, conexion) => {
-      const cantidad =1
-      conexion.query(
-        "UPDATE producto SET Cantidad = Cantidad - ? WHERE id_producto = ? ", [cantidad,req.params.id],(err,aumento)=>{
-          if (err) {
-            console.log(err);
-            res.status(500).json(err);
-          }
-          res.status(200).json("dismunuir");
-        }
-      )
-          
-        }
-      );
-    });
 
 routes.put("/editproduct/:id", (req, res) => {
   console.log(req.body);
@@ -136,10 +107,6 @@ routes.get("/categoria/:id", (req, res) => {
     );
   });
 });
-
-
-
-
 
 
 

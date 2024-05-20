@@ -30,17 +30,20 @@ routes.post('/login', async (req, res) => {
             } else {
                 console.log("Usuario encontrado:", result);
                 if (result.length === 0) {
+                  console.log("usuario no encontrado",result);
                     return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
                 }
                 const user = result[0];
                 console.log("usuario",user.contraseña);
                 const validPassword = await bcrypt.compare(password, user.contraseña);
                 if (!validPassword) {
+                  console.log("contraseña incorrecta",validPassword);
                     return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
                 }
                 const accessToken = jwt.sign({ userId: user.id_usuario }, secretKey, { expiresIn: '15m' });
                 const refreshToken = jwt.sign({ userId: user.id_usuario }, secretKey);
                 await conexion.query('INSERT INTO Tokens (refresh_token) VALUES (?)', [refreshToken]);
+                console.log({ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario,personal:user.id_usuario_personal,client:user.id_usuario_cliente } });
 
                 res.status(200).json({ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario,personal:user.id_usuario_personal,client:user.id_usuario_cliente } });
             }
