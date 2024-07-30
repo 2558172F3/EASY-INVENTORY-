@@ -1,7 +1,7 @@
 
 import { useQuery } from  '@tanstack/react-query';
-import { useState, useEffect } from 'react';
-import { useGetProducts,useDisminucion, useAumento } from "../api/products";
+import { useState } from 'react';
+import { useGetProducts } from "../api/products";
 import PortalLayout from "../layout/PortalLayout";
 // import { Link } from "react-router-dom";
 // import { API_URL } from "../auth/authConstants";
@@ -12,9 +12,7 @@ import { Productos } from "../types/types";
 
 
 export default function Dashboard() {
-  // const auth = useAuth();
-  // const [, setProductos] = useState<Productos[]>([]);
-  const [filtroCategoria, setFiltroCategoria] = useState<string | null>(null);
+
   const [ordenCantidad, setOrdenCantidad] = useState<'asc' | 'desc' | null>(null);
   const { data:productos, isLoading, isError, error ,refetch} = useQuery({
     queryKey: ['productos'],
@@ -24,42 +22,47 @@ export default function Dashboard() {
   if (!productos) {
     
     return <div>Loading...</div>
+
+    
+  
   }
-  let productosFiltrados = productos;
-
-  // Filtrar por categoría
-  // if (filtroCategoria) {
-  //   productosFiltrados = productosFiltrados.filter(producto => producto.ID_Categoria === filtroCategoria);
-  // }
-
-  // Ordenar por cantidad
-  if (ordenCantidad) {
-    productosFiltrados.sort((a, b) => ordenCantidad === 'asc' ? a.Cantidad - b.Cantidad : b.Cantidad - a.Cantidad);
-  }
-
-  const disminuir = async (id:number)=>{
-    let producto = productos.find(producto => producto.ID_Producto === id);
-    if (producto) {
-      if (producto.Cantidad===0) {
-        alert("Ya no hay stock para este producto")
-        return
+  const filtroCategoriaFn = () => {
+    const filter= productos.sort((a, b) => {
+      if (a.Nombre_Categoria < b.Nombre_Categoria) {
+          return -1;
       }
-      
-    }
-    const response = await useDisminucion(id)
-    if (response===200) {
-      refetch()
-    }
-    console.log("error",response);
+      if (a.Nombre_Categoria > b.Nombre_Categoria) {
+          return 1;
+      }
+      return 0;
+  });
+    console.log(filter);
   }
 
-  const aumentar = async (id:number)=>{
-    const response = await useAumento(id)
-    if (response===200) {
-      refetch()
-    }
-    console.log("error",response);
+  const filtroCantidadFn = (cantidad:'asc' | 'desc' | null ) => {
+    setOrdenCantidad(cantidad);
+    if (cantidad === 'asc') {
+      const filter= productos.sort((a, b) => a.Cantidad - b.Cantidad);
+      console.log(filter);
+    } else {
+      const filter= productos.sort((a, b) => b.Cantidad - a.Cantidad);
+      console.log(filter);
+
   }
+  }
+
+  const filtroPrecioFn = (precio:'asc' | 'desc' | null ) => {
+    setOrdenCantidad(precio);
+    if (precio === 'asc') {
+      const filter= productos.sort((a, b) => a.Precio - b.Precio);
+      console.log(filter);
+    } else {
+      const filter= productos.sort((a, b) => b.Precio - a.Precio);
+      console.log(filter);
+
+  }
+  }
+
   return (
     <>
     <PortalLayout>
@@ -81,10 +84,26 @@ export default function Dashboard() {
               <thead>
                 <tr>
                   <th>Producto</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
+                  <th 
+                  onClick={ordenCantidad === 'asc' ? () => filtroCantidadFn('desc') : () => filtroCantidadFn('asc')}
+                  style={{ cursor: 'pointer' }}
+                  >
+                    Cantidad
+                    {ordenCantidad === 'asc' ? <span>&#8595;</span>: <span>&#8593;</span> }
+                  </th>
+
+                  <th
+                  onClick={ordenCantidad === 'asc' ? () => filtroPrecioFn('desc') : () => filtroPrecioFn('asc')}
+                  style={{ cursor: 'pointer' }}
+                  >
+                    Precio
+                    {ordenCantidad === 'asc' ? <span>&#8595;</span>: <span>&#8593;</span> }
+                  </th>
+                  <th onClick={() => filtroCategoriaFn()}
+                  style={{ cursor: 'pointer' }}
+                  >Categoría</th>
                   <th>Editar</th>
-                  <th>Aumentar/Disminuir cantidad</th>
+                  <th>Eliminar</th>
                 </tr>
               </thead>
               <tbody>
@@ -92,7 +111,7 @@ export default function Dashboard() {
                   <>
                   <ModalFormEditProducts  producto={{
                     _id: producto1.ID_Producto.toString(),
-                    ID_categoria:producto1.ID_Categoria,
+                    ID_categoria:producto1.ID_categoria,
                     Nombre: producto1.Nombre,
                     Cantidad: producto1.Cantidad,
                     Precio: producto1.Precio,
@@ -104,14 +123,10 @@ export default function Dashboard() {
                   <tr key={ producto1.ID_Producto.toString()}>
                     <td>{producto1.Nombre}</td>
                     <td>{producto1.Cantidad}</td>
-                    <td>{producto1.Precio}</td>
+                    <td>$ {producto1.Precio}</td>
+                    <td>{producto1.Nombre_Categoria}</td>
                     <td><button className="btn btn-warning"  data-bs-toggle="modal" data-bs-target={`#product-edit-${producto1.ID_Producto}`} id="shown.bs.modal" >editar</button></td>
                     <td><button className="btn btn-danger"  data-bs-toggle="modal" data-bs-target={`#product-delet-${producto1.ID_Producto}`} id="shown.bs.modal" >eliminar</button></td>
-
-                    <td>
-                    <button  className="btn btn-danger" onClick={()=>disminuir(producto1.ID_Producto)}> {producto1.Cantidad===0 ? "no hay stock" : "-"} </button>
-                    <button  className="btn btn-success" onClick={()=>aumentar(producto1.ID_Producto)}> + </button>
-                    </td>
                   </tr>
                   </>
                 ))}
