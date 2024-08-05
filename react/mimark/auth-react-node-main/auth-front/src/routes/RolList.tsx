@@ -1,11 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react'; 
 import { useQuery } from '@tanstack/react-query';
-import { useGetRol, usePostRol, useDeleteRol } from '../api/rol'; // Importa las funciones de API
+import { useGetRol,   } from '../api/rol'; // Importa las funciones de API
 import { Rol } from '../types/types';
 import PortalLayout from '../layout/PortalLayout';
-import { EditModalRol} from '../components/EditModalRol';
-import { usePostCategoria } from '../api/categor';
-
 
 
 
@@ -44,7 +41,7 @@ const CustomerPage = () => {
     e.preventDefault();
     try {
       // Enviar los datos del nuevo proveedor al servidor
-      await usePostCategoria(formData);
+      // await usePostCategoria(formData);
       // Actualizar la lista de proveedores refetch
       await refetch();
       // Limpiar el formulario después de enviar
@@ -63,16 +60,16 @@ const CustomerPage = () => {
     return <div>Cargando...</div>;
   }  
 
-  const handleDelete = async (id_rol: number) => {
-    try {
-      await useDeleteRol(id_rol);
-      await refetch();
-      console.log(`Rol con ID ${id_rol} eliminado exitosamente.`);
-      alert("Rol eliminado con éxito")
-    } catch (error) {
-      console.error('Error al eliminar el rol:', error);
-    }
-  };
+  // const handleDelete = async (id_rol: number) => {
+  //   try {
+  //     await useDeleteRol(id_rol);
+  //     await refetch();
+  //     console.log(`Rol con ID ${id_rol} eliminado exitosamente.`);
+  //     alert("Rol eliminado con éxito")
+  //   } catch (error) {
+  //     console.error('Error al eliminar el rol:', error);
+  //   }
+  // };
 
   {/*const editRol = (id: number) => {
     console.log(`Eliminando rol con ID: ${id}`);
@@ -104,18 +101,18 @@ const CustomerPage = () => {
             </tr>
           </thead>
           <tbody>
-                {rol.map((rol1:rol) => (
+                {/* {rol.map((rol1:rol) => (
                   <>
                   < EditModalRol  rol={{
                     _id: rol1.id_rol.toString(),
                     Nombre:rol1.nombre,
                     
                   }
-                } 
-                refetch={refetch}
+                }  */}
+                {/* refetch={refetch} */}
                 
-                />
-                  <tr key={ rol1.id_rol.toString()}>
+                {/* /> */}
+                  {/* <tr key={ rol1.id_rol.toString()}>
                     <td>{rol1.nombre}</td>
                     
                     <td><button className="btn btn-warning"  onClick={()=>handleSubmit(rol1.id_rol)} data-bs-toggle="modal" data-bs-target={`#rol-edit-${rol1.id_rol}`} id="shown.bs.modal" >editar</button></td>
@@ -123,7 +120,7 @@ const CustomerPage = () => {
 
                   </tr>
                   </>
-                ))}
+                ))} */}
               </tbody>
         </table>
       </div>

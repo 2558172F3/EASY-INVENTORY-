@@ -156,7 +156,7 @@ const CustomerPage = () => {
                   >
                     Estado
                   </button>
-                  <DeleteModalCorreo id={`delete-modal-${personal1.id_personal}`} handleDelete={undefined} />
+                  <DeleteModalCorreo id={`delete-modal-${personal1.id_personal}`} handleDelete={() => {}} />
                 </td>
                 </tr>
               </React.Fragment>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import DefaultLayout from "../layout/DefaultLayout";
 import { useAuth } from "../auth/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
-import { AuthResponse, AuthResponseError } from "../types/types";
+import {  AuthResponseError } from "../types/types";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -25,7 +25,7 @@ export default function Signup() {
         body: JSON.stringify({ username, password, name , role}),
       });
       if (response.ok) {
-        const json = (await response.json()) as AuthResponse;
+        const json = (await response.json()) ;
         console.log(json);
         setUsername("");
         setPassword("");
@@ -42,7 +42,7 @@ export default function Signup() {
     }
   }
 
-  if (auth.isAuthenticated) {
+  if (auth.isTokenValid) {
     return <Navigate to="/dashboard" />;
   }
 

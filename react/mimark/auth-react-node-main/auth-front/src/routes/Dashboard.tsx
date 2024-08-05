@@ -14,7 +14,7 @@ import { Productos } from "../types/types";
 export default function Dashboard() {
 
   const [ordenCantidad, setOrdenCantidad] = useState<'asc' | 'desc' | null>(null);
-  const { data:productos, isLoading, isError, error ,refetch} = useQuery({
+  const { data:productos,refetch} = useQuery({
     queryKey: ['productos'],
     queryFn: useGetProducts,
   });

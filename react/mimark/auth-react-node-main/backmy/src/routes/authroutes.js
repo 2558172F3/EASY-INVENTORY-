@@ -43,7 +43,7 @@ routes.post('/login', async (req, res) => {
                 const accessToken = jwt.sign({ userId: user.id_usuario }, secretKey, { expiresIn: '15m' });
                 const refreshToken = jwt.sign({ userId: user.id_usuario }, secretKey);
                 await conexion.query('INSERT INTO Tokens (refresh_token) VALUES (?)', [refreshToken]);
-                console.log({ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario,personal:user.id_usuario_personal,client:user.id_usuario_cliente } });
+                console.log("este es el usuario",{ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario,personal:user.id_usuario_personal,client:user.id_usuario_cliente } });
 
                 res.status(200).json({ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario,personal:user.id_usuario_personal,client:user.id_usuario_cliente } });
             }

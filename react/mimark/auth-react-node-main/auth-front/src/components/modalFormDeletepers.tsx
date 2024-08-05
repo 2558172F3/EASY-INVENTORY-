@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const DeleteModalCorreo = ({ handleDelete, id }) => {
+type DeleteModalCorreoProps = {
+  handleDelete: (correo: string) => void;
+  id: string;
+};
+
+const DeleteModalCorreo = ({ handleDelete, id }: DeleteModalCorreoProps) => {
   const [correo, setCorreo] = useState('');
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {

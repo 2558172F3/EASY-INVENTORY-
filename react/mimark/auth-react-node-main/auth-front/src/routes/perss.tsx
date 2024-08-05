@@ -1,14 +1,14 @@
-import  { useState, useEffect } from 'react';
+// import  { useState, useEffect } from 'react';
 import { useQuery } from  '@tanstack/react-query';
 import { useGetPersonal } from "../api/pers";
-import { personal } from '../types/types';
+// import { personal } from '../types/types';
 import PortalLayout from '../layout/PortalLayout';
 
 
-interface Purchase {
-  id_personal: number;
-  amount: number;
-}
+// interface Purchase {
+//   id_personal: number;
+//   amount: number;
+// }
 
 
 
@@ -22,7 +22,7 @@ const CustomerPage = () => {
 
  
     
-  let total =0
+  // let total =0
   if (!personal) {
     return <div>Cargando...</div>
   }

@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useCategoriaById } from '../api/categor';
 
-const DeleteModalCategoria = ({ handleDelete, id }) => {
+type DeleteModalCategoriaProps = {
+  handleDelete: (arg: any | undefined) => void;
+  id: string;
+};
+
+const DeleteModalCategoria = ({ handleDelete, id }: DeleteModalCategoriaProps) => {
   const [categoria, setCategoria] = useState('');
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {

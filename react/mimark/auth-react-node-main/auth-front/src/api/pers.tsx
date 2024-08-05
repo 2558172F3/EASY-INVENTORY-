@@ -1,5 +1,5 @@
 
-import { Personal, PersonalListPost, PersonalDelete} from '../types/types'
+import { Personal, personalPost} from '../types/types'
 import apiClient from '../apiClient'
 
 interface per {
@@ -59,7 +59,7 @@ export const usePostPersonal = async (personal:Personal) => {
 }
 export const usePersonalById = async (id:string) => {
     try {
-        const response = await apiClient.get<PersonalListPost[]>(`/personal/${id}`)
+        const response = await apiClient.get<personalPost[]>(`/personal/${id}`)
         return response.data
     } catch (error) {
         console.log(error)
@@ -70,7 +70,7 @@ export const usePersonalById = async (id:string) => {
 
 export const getPersonalDataById = async (id:string) => {
     try {
-        const response = await apiClient.get<PersonalListPost[]>(`/personal/${id}`)
+        const response = await apiClient.get<personalPost[]>(`/personal/${id}`)
         return response.data
     } catch (error) {
         console.log(error)

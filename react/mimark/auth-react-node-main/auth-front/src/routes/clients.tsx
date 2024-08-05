@@ -1,13 +1,7 @@
-import  { useState, useEffect } from 'react';
+
 import { useQuery } from  '@tanstack/react-query';
 import { useGetClientes } from "../api/client";
-import { Clientes } from '../types/types';
 import PortalLayout from '../layout/PortalLayout';
-
-interface Purchase {
-  id: number;
-  amount: number;
-}
 
 
 
@@ -20,8 +14,6 @@ const CustomerPage = () => {
   });
 
  
-    
-  let total =0
   if (!clientes) {
     return <div>cargando...</div>
   }

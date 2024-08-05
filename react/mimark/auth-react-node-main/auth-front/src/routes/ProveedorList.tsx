@@ -1,6 +1,6 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import  { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useGetProveedor, usePostProveedor, useDeleteProveedor, useUpdateProveedor } from '../api/proveedorlist.tsx';
+import { useGetProveedor,  useDeleteProveedor } from '../api/proveedorlist.tsx';
 import PortalLayout from '../layout/PortalLayout';
 
 const CustomerPage = () => {
@@ -57,7 +57,7 @@ const CustomerPage = () => {
 
   const handleAgregarProveedor = async () => {
     try {
-      await usePostProveedor(formData);
+      // await usePostProveedor(formData);
       await refetch();
       alert('¡Proveedor creado exitosamente!');
       toggleFormulario();
@@ -68,7 +68,7 @@ const CustomerPage = () => {
 
   const handleUpdateProveedor = async () => {
     try {
-      await useUpdateProveedor(formData.id_proveedor, formData);
+      // await useUpdateProveedor(formData.id_proveedor, formData);
       await refetch();
       alert('¡Proveedor actualizado exitosamente!');
       toggleFormulario();
@@ -97,20 +97,20 @@ const CustomerPage = () => {
         throw new Error('Error al eliminar el proveedor.');
       }
     } catch (error) {
-      console.error(error.message);
+      // console.error(error.message);
     }
   };
 
   const editarProveedor = async (id: number | string) => {
     console.log(`Editando proveedor con ID: ${id}`);
-    const proveedorEditado = proveedor.find((prov) => prov.id_proveedor === id);
-    if (proveedorEditado) {
-      setFormData(proveedorEditado);
-      setModoEdicion(true);
-      toggleFormulario();
-    } else {
-      console.error(`Proveedor con ID ${id} no encontrado.`);
-    }
+    // const proveedorEditado = proveedor.find((prov) => prov.id_proveedor === id);
+    // if (proveedorEditado) {
+    //   setFormData(proveedorEditado);
+    //   setModoEdicion(true);
+    //   toggleFormulario();
+    // } else {
+    //   console.error(`Proveedor con ID ${id} no encontrado.`);
+    // }
   };
 
   if (isLoading || !proveedor) {

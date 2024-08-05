@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect } from "react";
-import {  useVerfyToken,useLogoutMutation} from "../api/user";
+import {  useVerfyToken} from "../api/user";
 import { useState } from "react";
 
 // Crear el contexto del AuthProvider

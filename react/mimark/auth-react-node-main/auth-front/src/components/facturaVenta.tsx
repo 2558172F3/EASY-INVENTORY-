@@ -32,16 +32,16 @@ const FacturaVenta: React.FC = () => {
         correo: '',
     });
 
-    const [productos, setProductos] = useState<Producto[]>([]);
+    const [productos, ] = useState<Producto[]>([]);
 
-    const agregarProducto = (nombre: string, precio: number) => {
-        const nuevoProducto: Producto = {
-            nombre,
-            precio,
-        };
+    // const agregarProducto = (nombre: string, precio: number) => {
+    //     const nuevoProducto: Producto = {
+    //         nombre,
+    //         precio,
+    //     };
 
-        setProductos([...productos, nuevoProducto]);
-    };
+    //     setProductos([...productos, nuevoProducto]);
+    // };
 
     return (
         <div className='container bg-light'>

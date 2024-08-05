@@ -35,6 +35,7 @@ routes.get("/:id", (req, res) => {
 });
 
 routes.post("/", (req, res) => {
+  console.log(req.body, "bodycreate");
   const {ID_categoria,Nombre,Precio,Cantidad}=req.body.producto
   console.log("estamos en el crear producto",ID_categoria,Nombre,Precio,Cantidad);
   req.getConnection((error, conexion) => {
@@ -73,25 +74,35 @@ routes.put("/editproduct/:id", (req, res) => {
   });
 
 
-routes.delete("/del/:id", (req, res) => {
-  req.getConnection((error, conexion) => {
-    if (error) {
-      return res.send(error);
-    }
-    conexion.query(
-      "DELETE FROM producto WHERE id_producto = ?",
-      [req.params.id],
-      (err, productosRows) => {
-        if (err) {
-          return res.send(err);
-        }
-        
-        res.status(200).json("<h2>Producto ELIMINADO con éxito</h2>");
+  routes.delete("/del/:id", (req, res) => {
+    console.log(req.params.id, "id del producto a eliminar");
+    req.getConnection((error, conexion) => {
+      if (error) {
+        console.error(error); // Usar console.error para errores
+        return res.status(500).json({ error: "Error al obtener la conexión" });
       }
-    );
+      conexion.query(
+        "DELETE FROM producto WHERE id_producto = ?",
+        [req.params.id],
+        (err, result) => {
+          if (err) {
+            console.error(err); // Usar console.error para errores
+            // Proporcionar una respuesta más específica dependiendo del error
+            if (err.code === 'ER_ROW_IS_REFERENCED_2') {
+              return res.status(400).json({ error: "No se puede eliminar el producto porque está referenciado por otras tablas." });
+            }
+            return res.status(500).json({ error: "Error al eliminar el producto" });
+          }
+          if (result.affectedRows === 0) {
+            // Si no se encontró el producto para eliminar
+            return res.status(404).json({ message: "Producto no encontrado" });
+          }
+          console.log(result);
+          res.status(200).json({ message: "Producto eliminado con éxito" });
+        }
+      );
+    });
   });
-});
-
 // buscar por categoria
 routes.get("/categoria/:id", (req, res) => {
   req.getConnection((error, conexion) => {

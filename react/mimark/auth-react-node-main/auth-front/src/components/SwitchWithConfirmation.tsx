@@ -6,9 +6,10 @@ interface SwitchWithConfirmationProps {
     toggleSwitch: () => void;
     confirmSwitch: () => void;
     cancelSwitch: () => void;
+    children: React.ReactNode;
 }
   
-const SwitchWithConfirmation: React.FC<SwitchWithConfirmationProps> = ({ isActive, toggleSwitch, confirmSwitch, cancelSwitch }) => {
+const SwitchWithConfirmation: React.FC<SwitchWithConfirmationProps> = ({ isActive,  confirmSwitch, cancelSwitch }) => {
     const [showModal, setShowModal] = useState(false);
 
     const openModal = () => {

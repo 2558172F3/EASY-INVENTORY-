@@ -1,21 +1,21 @@
 import React from 'react';
 //import { Container, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import {useQuery} from '@tanstack/react-query'
-import { personal, personalPost } from '../types/types';
-import { usePersonalById } from '../api/pers';
-import apiPersonal from '../apiPers';
+// import {useQuery} from '@tanstack/react-query'
+// import { personal, personalPost } from '../types/types';
+// import { usePersonalById } from '../api/pers';
+// import apiPersonal from '../apiPers';
 
-interface Personal {
+// interface Personal {
   
-  id_personal: number;
-  rol: number;
-  nombre: string;
-  apellidos: string;
-  telefono: string;
-  correo: string;
+//   id_personal: number;
+//   rol: number;
+//   nombre: string;
+//   apellidos: string;
+//   telefono: string;
+//   correo: string;
   
-}
+// }
 
 
 

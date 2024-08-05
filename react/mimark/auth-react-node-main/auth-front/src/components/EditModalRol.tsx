@@ -1,34 +1,24 @@
 import { useState, useEffect } from "react";
 import { useEditRol } from "../api/rol";
 
-interface rols {
+
+interface rol {
     rol: {
         _id: string;        
-        Nombre: string;
+        nombre: string;
     };
-    refetch?: Function;
 }
 
-export const EditModalRol = (arg: rols) => {
-    const [Nombre, setNombre] = useState(arg.rol.Nombre);
+export const EditModalRol = (arg: rol) => {
+    const [Nombre, setNombre] = useState(arg.rol.nombre);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const roles: rols = {
-            rol: {
-                _id: arg.rol._id,
-                Nombre,
-                
-            },
-        };
         try {
-            const response = await useEditRol(arg.rol.roles,toString());
+            const response = await useEditRol(arg.rol._id,arg);
             console.log(response, "===================== status code response");
 
             if (response) {
-                if (arg.refetch) {
-                    arg.refetch();
-                }
                 alert("Rol modificado");
             } else {
                 // Manejar el caso de error

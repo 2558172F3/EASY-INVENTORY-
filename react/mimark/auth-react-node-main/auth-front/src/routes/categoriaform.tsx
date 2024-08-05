@@ -122,7 +122,7 @@ const CustomerPage = () => {
                    Eliminar
                   </button>
                   
-                  <DeleteModalCategoria id={`delete-modal-${categoria.id_categoria}`} handleDelete={undefined} />
+                  <DeleteModalCategoria id={`delete-modal-${categoria.id_categoria}`} handleDelete={() => {}} />
                 </td>
                 </tr>
               </React.Fragment>

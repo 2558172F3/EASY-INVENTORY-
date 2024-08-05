@@ -1,19 +1,7 @@
 import React from 'react';
-import { Container, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import {useQuery} from '@tanstack/react-query'
-import { Clientes, ClientesPost } from '../types/types';
-import { useClienteById } from '../api/client';
-import apiClient from '../apiClient';
 
-interface Cliente {
-  id_cliente: string;
-  nombre: string;
-  apellidos: string;
-  telefono: string;
-  correo: string;
-  ciudad: string;
-}
+
 
 
 

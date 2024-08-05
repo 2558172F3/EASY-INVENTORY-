@@ -27,6 +27,7 @@ error?: string;
 }
 
 export interface FacturaVenta {
+  [key: string]: any;
   ID_Factura:   number;
   fecha_compra: Date;
   vendedor:     string;

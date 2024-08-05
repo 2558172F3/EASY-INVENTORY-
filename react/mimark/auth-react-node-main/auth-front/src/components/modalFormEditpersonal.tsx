@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { getPersonalDataById } from '../api/pers'; // Importa la función para obtener los datos personales por ID
+import {personalPost } from '../types/types'; // Importa el tipo de dato para los datos personales
 
-interface PersonalData {
-  id_personal: Number;
-  rol: Number;
-  nombre: string;
-  apellidos: string;
-  telefono: string;
-  correo: string;
-}
 
 const EditModal: React.FC = () => {
   const [show, setShow] = useState(false);
-  const [data, setData] = useState<PersonalData>({
-    id_personal: '',
-    rol: '',
+  const [data, setData] = useState<personalPost>({
+    id_personal: 0,
+    rol: 0,
     nombre: '',
     apellidos: '',
     telefono: '',
@@ -31,7 +24,7 @@ const EditModal: React.FC = () => {
 
   const handleSearch = async () => {
     try {
-      const personalData = await getPersonalDataById(data.id_personal);
+      const personalData = await getPersonalDataById(data.id_personal.toString());
       if (personalData && personalData.length > 0) {
         // Asignar el primer elemento de personalData
         setData(personalData[0]);
@@ -67,7 +60,7 @@ const EditModal: React.FC = () => {
 
             <Form.Group controlId="formRol">
               <Form.Label>Rol</Form.Label>
-              <Form.Control type="text" name="rol" value={data.rol} onChange={handleChange} />
+              <Form.Control type="text" name="rol" value={data.rol.toString()} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group controlId="formNombre">

@@ -12,12 +12,21 @@ import proveedorlist from "./routes/proveedor.js";
 import clientelist from "./routes/clientesroutes.js";
 import categoria from "./routes/categoria.js";
 import invoicing from "./routes/invoicing.js";
+//  importar el archivo html
 
+import path from "path";
+const __dirname = path.resolve();
+console.log(__dirname);
+// retroceder una carpeta
+const rutaHtml = path.join(__dirname, "../auth-front/dist");
+
+console.log(rutaHtml);
 
 
 
 // 12 - Agrego el middleware para parser los datos a JSON, OJO se debe instalar npm i body-parser
 import bodyParser from "body-parser";
+
 
 
 
@@ -56,8 +65,11 @@ app.use("/factura_producto", invoicing);
 
 // 5-  Creo la ruta base
 app.get("/", (req, res) => {
-  res.send("Bienvenido a mi API conectandome a MySQL...");
+  res.sendFile(rutaHtml + "/index.html");
 });
+
+// 11 - Creo la ruta para los archivos estaticos
+app.use(express.static(rutaHtml));
 
 // 7 - Agregamos otra ruta
 // 8 - Creamos un archivo para las ruta  ./routes.js

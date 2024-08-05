@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Table, Modal } from 'react-bootstrap';
-import { usePostPersonal, useGetPersonal, useDeletePersonal } from '../api/pers'; // Importa la función de consulta
+import { Form, Button, Table } from 'react-bootstrap';
+// import { usePostPersonal, useGetPersonal, useDeletePersonal } from '../api/pers'; // Importa la función de consulta
 import "./style/styles.css";
-import ModalFormEditPersonal from '../components/modalFormEditpersonal'; 
+// import ModalFormEditPersonal from '../components/modalFormEditpersonal'; 
 import PortalLayout from '../layout/PortalLayout';
 
 const PersForm: React.FC = () => {
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [records, setRecords] = useState<any[]>([]); // Estado para almacenar los registros
   const [formState, setFormState] = useState({
     id_personal:'',
@@ -18,14 +18,8 @@ const PersForm: React.FC = () => {
   });
 
 // Estado para controlar la visibilidad del modal de eliminación
-const [showDeleteModal, setShowDeleteModal] = useState(false);
-// Estado para almacenar el id_personal del registro a eliminar
-const [idToDelete, setIdToDelete] = useState('');
 
-const handleDeleteSubmit = async () => {
-  await handleDelete(idToDelete);
-  setShowDeleteModal(false);
-};
+// Estado para almacenar el id_personal del registro a eliminar
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,9 +31,8 @@ const handleDeleteSubmit = async () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const response = await usePostPersonal(formState);
-    console.log(response, "===================== status code response");
+
+
 
     // Agregar el nuevo registro al estado de registros
     setRecords([...records, formState]);
@@ -57,7 +50,7 @@ const handleDeleteSubmit = async () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await useDeletePersonal(id); // Asume que useDeletePersonal es una función que elimina un registro por id
+      // await useDeletePersonal(id); // Asume que useDeletePersonal es una función que elimina un registro por id
       setRecords(records.filter(record => record.id_personal !== id)); // Actualiza el estado de los registros
     } catch (error) {
       console.error('Error deleting personal data:', error);
@@ -65,15 +58,15 @@ const handleDeleteSubmit = async () => {
   };
   
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
+  // const toggleModal = () => {
+  //   setShowModal(!showModal);
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await useGetPersonal(); // Realiza la consulta para obtener los registros
-        setRecords(data); // Establece los registros en el estado
+        // const data = await useGetPersonal(); // Realiza la consulta para obtener los registros
+
       } catch (error) {
         console.error('Error fetching personal data:', error);
       }
@@ -119,7 +112,7 @@ const handleDeleteSubmit = async () => {
             Agregar
           </Button>
           {/* Modal para editar */}
-          <ModalFormEditPersonal show={showModal} onHide={toggleModal} />
+          {/* <ModalFormEditPersonal show={showModal} onHide={toggleModal} /> */}
         </div>  
 
         {/* Tabla para mostrar registros */}
