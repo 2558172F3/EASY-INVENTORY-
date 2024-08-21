@@ -6,18 +6,15 @@ import PortalLayout from "../layout/PortalLayout";
 // import { Link } from "react-router-dom";
 // import { API_URL } from "../auth/authConstants";
 import { ModalFormEmploy } from "../components/modalFormEmploy";
-import { ModalFormProducts } from "../components/modalFormProduct";
 import { ModalFormEditProducts} from "../components/modalFormEditproduct";
 import { Productos } from "../types/types";
+import { useProducts } from '../hoocks/infoPage';
 
 
 export default function Dashboard() {
 
   const [ordenCantidad, setOrdenCantidad] = useState<'asc' | 'desc' | null>(null);
-  const { data:productos,refetch} = useQuery({
-    queryKey: ['productos'],
-    queryFn: useGetProducts,
-  });
+  const {productos,refetch,error,isLoading} = useProducts();
   
   if (!productos) {
     
@@ -67,7 +64,6 @@ export default function Dashboard() {
     <>
     <PortalLayout>
       <ModalFormEmploy/>
-      <ModalFormProducts refetch={refetch} />
       <div className="dashboard">
         
       </div>

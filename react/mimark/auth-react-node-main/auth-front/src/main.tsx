@@ -1,24 +1,26 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {Login} from "./routes/Login.tsx";
-import Signup from "./routes/Signup.tsx";
-import Clients from "./routes/clients.tsx"
-import { AuthProvider } from "./auth/AuthProvider.tsx";
-import Dashboard from "./routes/Dashboard.tsx";
-import ProtectedRoute from "./routes/ProtectedRoute.tsx";
-import Profile from "./routes/Profile.tsx";
-import  ClientesForm  from "./routes/clientesform.tsx";
-import  ClienteInfo  from "./routes/clientesId.tsx";
-import  ProveedorList  from "./routes/ProveedorList.jsx";
-import Categoria  from "./routes/categoriaform.tsx";
-import  FacturaList    from "./routes/FacturaList.jsx";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from "./auth/AuthProvider.tsx";
+import Categoria from "./routes/categoriaform.tsx";
+import ClientesForm from "./routes/clientesform.tsx";
+import ClienteInfo from "./routes/clientesId.tsx";
+import Clients from "./routes/clients.tsx";
+import Dashboard from "./routes/Dashboard.tsx";
+import FacturaList from "./routes/FacturaList.jsx";
+import { Login } from "./routes/Login.tsx";
+import NewFactura  from "./routes/newFactura.tsx";
+import Profile from "./routes/Profile.tsx";
+import ProtectedRoute from "./routes/ProtectedRoute.tsx";
+import ProveedorList from "./routes/ProveedorList.jsx";
+import Signup from "./routes/Signup.tsx";
 
-import "./index.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 import PersonalList from "./routes/personalList.tsx";
 import RolList from "./routes/RolList.tsx";
 
@@ -61,10 +63,10 @@ const router = createBrowserRouter([
     path:"/Categoria",
      element:<Categoria/>
    }, 
-
-
-
-
+   {
+    path:"/new-factura",
+      element:<NewFactura />
+   },
   {
    path:"/proveedor",
     element:<ProveedorList/>
@@ -82,6 +84,7 @@ const router = createBrowserRouter([
         path: "/me",
         element: <Profile />,
       },
+
     ],
   },
 ]);

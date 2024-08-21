@@ -12,6 +12,7 @@ routes.get("/", (req, res) => {
     if (error) return res.send(error);
     conexion.query(`
     SELECT 
+    c.id_cliente,
     c.nombre, 
     c.apellidos, 
     c.telefono, 
@@ -40,6 +41,19 @@ GROUP BY
       if (err) return res.send(err);
       res.json(piezasRows);
     });
+  });
+});
+
+// 2- get clients
+routes.get("/clientes", (req, res) => {
+  req.getConnection((error, conexion) => {
+    if (error) return res.send(error);
+    conexion.query("SELECT * FROM cliente", (err, piezasRows) => {
+      if (err) return res
+      .send(err);
+      res.json(piezasRows);
+    }
+    );
   });
 });
 

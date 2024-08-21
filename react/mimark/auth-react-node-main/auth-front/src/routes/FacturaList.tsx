@@ -4,6 +4,7 @@ import PortalLayout from '../layout/PortalLayout';
 import { FacturaVenta, Producto } from '../types/types.ts';
 import { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
+import { Link } from 'react-router-dom';
 
 const CustomerPage = () => {
   const { data: factura } = useQuery({
@@ -182,6 +183,7 @@ const CustomerPage = () => {
           </tbody>
         </table>
         <button onClick={exportToExcel}>Exportar a Excel</button>
+        <Link to="/new-factura">Crear Factura</Link>
       </div>
     </PortalLayout>
   );

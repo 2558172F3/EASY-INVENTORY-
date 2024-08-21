@@ -12,6 +12,7 @@ import proveedorlist from "./routes/proveedor.js";
 import clientelist from "./routes/clientesroutes.js";
 import categoria from "./routes/categoria.js";
 import invoicing from "./routes/invoicing.js";
+import Factura_venta from "./routes/facturaVenta.js";
 //  importar el archivo html
 
 import path from "path";
@@ -62,6 +63,7 @@ app.use("/cliente", clientelist);
 app.use("/categoria", categoria);
 app.use("/factura", invoicing);
 app.use("/factura_producto", invoicing);
+app.use("/facturaVenta", Factura_venta);
 
 // 5-  Creo la ruta base
 app.get("/", (req, res) => {

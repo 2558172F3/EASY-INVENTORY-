@@ -38,6 +38,7 @@ export const useSigninMutation = () =>
       onSuccess:async (data) => {        
         await localStorage.setItem('token', data.accessToken)
         await localStorage.setItem('refreshToken', data.refreshToken)
+        await localStorage.setItem('personal_id', JSON.stringify(data.user.personal))
         console.log('signinMutation', data);
         
       },

@@ -13,6 +13,17 @@ export const useGetClientes = async () => {
   return 
 }
 
+export const useGetClientes_1 = async () => {
+    try {
+        const response = await apiClient.get<ClientesPost[]>('/cliente/clientes')
+        return response.data
+    } catch (error) {
+        console.log(error)
+        return
+    }
+  return 
+}
+
 export const usePutClientes = async () => {
     try {
         const response = await apiClient.put<Clientes[]>('/cliente')

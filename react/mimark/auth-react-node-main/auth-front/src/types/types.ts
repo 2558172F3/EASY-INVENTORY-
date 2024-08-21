@@ -48,6 +48,7 @@ export interface Producto {
 
 
 export interface Clientes {
+  id_cliente:    number;
   nombre:        string;
   apellidos:     string;
   telefono:      string;
@@ -57,7 +58,10 @@ export interface Clientes {
   total_factura: number;
 }
 
+
+
 export interface ClientesPost {
+  id_cliente:    number;
   nombre:        string;
   apellidos:     string;
   telefono:      string;
