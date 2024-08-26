@@ -5,12 +5,7 @@ ES UN SISTEMA DE ALMACEN DE VENTA DONDE SE EXIBE EL PRODUCTO LA VENTA DEL POR MA
 ## Programadores
 -Edgar Farid Saiz Pinilla[@danni1697](http://github.com/danni1697)
 
-
-
-
-
-
--pedro Caicedo [@plcaicedo](https://github.com/@plcaicedo)}
+-pedro Caicedo [@plcaicedo](https://github.com/@plcaicedo)
 
 
 
