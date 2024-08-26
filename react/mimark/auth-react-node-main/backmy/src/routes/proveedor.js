@@ -4,12 +4,67 @@ const proveedorlist = express.Router();
 
 
 proveedorlist.get("/", (req, res) => {
-  //   res.send("<h1>Lista completa de las piezas de la coleccion</h1>");
   req.getConnection((error, conexion) => {
     if (error) return res.send(error);
-    conexion.query("SELECT * FROM proveedor", (err, piezasRows) => {
+    
+    const query = `
+      SELECT 
+        p.*,
+        fc.id_factura_compra,
+        fc.fecha_compra,
+        pfc.cantidad,
+        pfc.Precio,
+        pr.ID_Producto,
+        pr.Nombre AS nombre_producto,
+        pr.Precio AS precio_producto
+      FROM proveedor p
+      LEFT JOIN factura_compra fc ON p.proveedor_id = fc.proveedor_id
+      LEFT JOIN producto_factura_compra pfc ON fc.id_factura_compra = pfc.id_factura_compra
+      LEFT JOIN producto pr ON pfc.id_producto = pr.ID_Producto
+      ORDER BY p.proveedor_id, fc.id_factura_compra, pr.ID_Producto
+    `;
+
+    conexion.query(query, (err, rows) => {
       if (err) return res.send(err);
-      res.json(piezasRows);
+
+      // Procesamos los resultados para agrupar por proveedor
+      const proveedores = rows.reduce((acc, row) => {
+        if (!acc[row.proveedor_id]) {
+          acc[row.proveedor_id] = {
+            proveedor_id: row.proveedor_id,
+            nombre: row.nombre,
+            direccion: row.direccion,
+            telefono: row.telefono,
+            facturas: []
+          };
+        }
+        
+        if (row.id_factura_compra) {
+          let factura = acc[row.proveedor_id].facturas.find(f => f.id_factura_compra === row.id_factura_compra);
+          if (!factura) {
+            factura = {
+              id_factura_compra: row.id_factura_compra,
+              fecha_compra: row.fecha_compra,
+              productos: []
+            };
+            acc[row.proveedor_id].facturas.push(factura);
+          }
+          
+          if (row.ID_Producto) {
+            factura.productos.push({
+              ID_Producto: row.ID_Producto,
+              nombre_producto: row.nombre_producto,
+              cantidad: row.cantidad,
+              Precio: row.Precio,
+              precio_producto: row.precio_producto
+            });
+          }
+        }
+
+        return acc;
+      }, {});
+
+      res.json(Object.values(proveedores));
     });
   });
 });
