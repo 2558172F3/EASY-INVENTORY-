@@ -3,9 +3,10 @@ import { useProveedor } from '../hoocks/infoPage';
 import PortalLayout from '../layout/PortalLayout';
 import * as XLSX from 'xlsx';
 import { Proveedor } from '../types/types';
+import ModalProveedor from '../components/modalProveedor';
 
 const ProveedorList = () => {
-  const { proveedor } = useProveedor();
+  const { proveedor,refetch } = useProveedor();
   const [proveedoresOrdenados, setProveedoresOrdenados] = useState<Proveedor[]>([]);
   const [ordenAscendente, setOrdenAscendente] = useState(true);
   console.log(proveedor);
@@ -33,14 +34,27 @@ const ProveedorList = () => {
     XLSX.utils.book_append_sheet(wb, ws, "Proveedores");
     XLSX.writeFile(wb, "proveedores.xlsx");
   };
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
   return (
     <PortalLayout>
+    <ModalProveedor show={showModal} handleClose={handleCloseModal}  refecth={refetch}/>
       <div className="container mt-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h1>Proveedores</h1>
           <div>
-            <button className="btn btn-primary me-2">Agregar Proveedor</button>
+            <button className="btn btn-primary me-2"
+              onClick={handleOpenModal}
+
+            >Agregar Proveedor</button>
             <button className="btn btn-success" onClick={exportarAExcel}>Exportar a Excel</button>
           </div>
         </div>
@@ -56,7 +70,7 @@ const ProveedorList = () => {
           </thead>
           <tbody>
             {proveedoresOrdenados.map((prov) => (
-              <tr key={prov.id_proveedor}>
+              <tr key={prov.proveedor_id}>
                 <td>{prov.nombre}</td>
                 <td>{prov.direccion}</td>
                 <td>{prov.telefono}</td>

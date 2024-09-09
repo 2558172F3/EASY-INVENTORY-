@@ -16,7 +16,7 @@ export const useGetProveedor = async () => {
 
 export const usePostProveedor = async (proveedor: Proveedor) => {
     try {
-      const response = await apiClient.post<Proveedor[]>('/proveedor', proveedor);
+      const response = await apiClient.post('/proveedor', proveedor);
       return response.data;
     } catch (error) {
       console.error('Error al crear proveedor:', error);

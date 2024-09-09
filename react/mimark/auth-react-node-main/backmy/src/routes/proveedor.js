@@ -136,14 +136,31 @@ proveedorlist.get("/:id", (req, res) => {
  */
 // 11 - Ruta para insertar
 proveedorlist.post("/", (req, res) => {
+  console.log(req.body);
+  
   req.getConnection((error, conexion) => {
-    if (error) return res.send(error);
-    // console.log(req.body);
-    conexion.query("INSERT INTO proveedor SET ?", [req.body], (err, piezasRows) => {
-      if (err) return res.send(err);
-      //   res.json(piezasRows);
-      // 14 - cambiamos la respuesta
-      res.json("<h2>proveedor agregado con éxito</h2>");
+    if (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Error al obtener la conexión a la base de datos",
+        error: error.message,
+      });
+    }
+
+    conexion.query("INSERT INTO proveedor SET ?", [req.body], (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: "Error al insertar el proveedor",
+          error: err.message,
+        });
+      }
+
+      res.status(201).json({
+        success: true,
+        message: "Proveedor agregado con éxito",
+        data: result,
+      });
     });
   });
 });

@@ -71,11 +71,10 @@ export interface ClientesPost {
 }
 
 export interface Proveedor {
-  id_proveedor: number;
+  proveedor_id: number;
   nombre:       string;
   direccion:    string;
-  telefono:     number;
-  ciudad:       string;
+  telefono:     string;
 }
 export interface Categoria {
   id_categoria: number;
@@ -95,13 +94,6 @@ export interface ProveedorListPost {
   Acciones:        string;
 }
 
-export interface Proveedor {
-  id_proveedor: number;
-  nombre:       string;
-  direccion:    string;
-  telefono:     number;
-  ciudad:       string;
-}
 
 export interface Proveedordelet {
   id_proveedor: number;
