@@ -43,6 +43,9 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
           <li className="nav-item">
             <Link className="nav-link" to="/proveedor">Gestion Proveedor</Link>
           </li>
+          <li>
+            <Link to="/facturaCompra" className="nav-link">Compra</Link>
+          </li>
           <li className="nav-item">
             <Link className="nav-link" to="/categoria">Categoria</Link>
           </li>

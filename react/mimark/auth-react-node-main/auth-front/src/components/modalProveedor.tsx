@@ -15,15 +15,17 @@ const ModalProveedor: React.FC<ModalProveedorProps> = ({ show, handleClose,refec
     const [nombre, setNombre] = useState<string>('');
     const [direccion, setDireccion] = useState<string>('');
     const [telefono, setTelefono] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const proveedorData = {
-            proveedor_id:0,
+            proveedor_id:null,
             nombre,
             direccion,
             telefono,
+            email,
         };
 
         try {
@@ -79,6 +81,16 @@ const ModalProveedor: React.FC<ModalProveedorProps> = ({ show, handleClose,refec
                                 placeholder="Ingrese el teléfono"
                                 value={telefono}
                                 onChange={(e) => setTelefono(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Ingrese el email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </Form.Group>

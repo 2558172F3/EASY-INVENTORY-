@@ -18,42 +18,71 @@ async function encryptPassword(password) {
 
 // Ruta para iniciar sesión
 routes.post('/login', async (req, res) => {
-  console.log("estoy logeando",req.body);
-    try {
-      const { username, password } = req.body;
-      
-      // Busca el usuario en la base de datos
-      req.getConnection(async (error, conexion) => {
-        conexion.query('SELECT * FROM users WHERE nombre_usuario = ?', [username], async (err, result) => {
-            if (err) {
-                console.log("Error al buscar el usuario", err);
-            } else {
-                console.log("Usuario encontrado:", result);
-                if (result.length === 0) {
-                  console.log("usuario no encontrado",result);
-                    return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
-                }
-                const user = result[0];
-                console.log("usuario",user.contraseña);
-                const validPassword = await bcrypt.compare(password, user.contraseña);
-                if (!validPassword) {
-                  console.log("contraseña incorrecta",validPassword);
-                    return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
-                }
-                const accessToken = jwt.sign({ userId: user.id_usuario }, secretKey, { expiresIn: '15m' });
-                const refreshToken = jwt.sign({ userId: user.id_usuario }, secretKey);
-                await conexion.query('INSERT INTO Tokens (refresh_token) VALUES (?)', [refreshToken]);
-                console.log("este es el usuario",{ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario,personal:user.id_usuario_personal,client:user.id_usuario_cliente } });
+  console.log("Intentando iniciar sesión", req.body);
 
-                res.status(200).json({ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario,personal:user.id_usuario_personal,client:user.id_usuario_cliente } });
-            }
+  const { username, password } = req.body;
+
+  try {
+    // Busca el usuario en la base de datos
+    const user = await new Promise((resolve, reject) => {
+      req.getConnection((error, conexion) => {
+        if (error) {
+          return reject(error);
+        }
+        conexion.query('SELECT * FROM users WHERE nombre_usuario = ?', [username], (err, result) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(result[0]);
         });
+      });
     });
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
+
+    if (!user) {
+      console.log("Usuario no encontrado");
+      return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
     }
+
+    console.log("Usuario encontrado:", user);
+
+    // Asegúrate de que password y user.contraseña sean cadenas
+    if (typeof password !== 'string' || typeof user.contraseña !== 'string') {
+      console.log("Datos de contraseña inválidos");
+      return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.contraseña);
+    if (!validPassword) {
+      console.log("Contraseña incorrecta");
+      return res.status(400).json({ error: 'Nombre de usuario o contraseña incorrectos' });
+    }
+
+    const accessToken = jwt.sign({ userId: user.id_usuario }, secretKey, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ userId: user.id_usuario }, secretKey);
+
+    await new Promise((resolve, reject) => {
+      req.getConnection((error, conexion) => {
+        if (error) {
+          return reject(error);
+        }
+        conexion.query('INSERT INTO Tokens (refresh_token) VALUES (?)', [refreshToken], (err) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve();
+        });
+      });
+    });
+
+    console.log("Usuario autenticado con éxito", { accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario, personal: user.id_usuario_personal, client: user.id_usuario_cliente } });
+
+    res.status(200).json({ accessToken, refreshToken, user: { id: user.id_usuario, username: user.nombre_usuario, personal: user.id_usuario_personal, client: user.id_usuario_cliente } });
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 });
+
   
 
 // Ruta para renovar el token de acceso

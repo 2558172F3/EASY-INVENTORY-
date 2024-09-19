@@ -2,32 +2,51 @@
 import express from "express";
 const proveedorlist = express.Router();
 
-
 proveedorlist.get("/", (req, res) => {
   req.getConnection((error, conexion) => {
-    if (error) return res.send(error);
-    
+    if (error) return res.status(500).send(error);
+    conexion.query("SELECT * FROM proveedores", (err, usersRows) => {
+      if (err) return
+      res.json(usersRows);
+    });
+  });
+});
+
+
+proveedorlist.get("/compras", (req, res) => {
+  req.getConnection((error, conexion) => {
+    if (error) {
+      console.error('Error al obtener la conexión:', error);
+      return res.status(500).json({ error: 'Error al obtener la conexión a la base de datos' });
+    }
+
+    console.log("Obteniendo proveedores");
+
     const query = `
       SELECT 
-        p.*,
-        fc.id_factura_compra,
-        fc.fecha_compra,
-        pfc.cantidad,
-        pfc.Precio,
-        pr.ID_Producto,
-        pr.Nombre AS nombre_producto,
-        pr.Precio AS precio_producto
-      FROM proveedor p
-      LEFT JOIN factura_compra fc ON p.proveedor_id = fc.proveedor_id
-      LEFT JOIN producto_factura_compra pfc ON fc.id_factura_compra = pfc.id_factura_compra
-      LEFT JOIN producto pr ON pfc.id_producto = pr.ID_Producto
-      ORDER BY p.proveedor_id, fc.id_factura_compra, pr.ID_Producto
+        pr.*,
+        c.id_compra,
+        c.fecha_compra,
+        c.cantidad,
+        c.precio_compra,
+        p.proveedor_id,
+        p.nombre,
+        p.direccion,
+        p.telefono
+      FROM proveedores p
+      LEFT JOIN compras c ON p.proveedor_id = c.id_proveedor
+      LEFT JOIN producto pr ON c.id_producto = pr.id_producto
+      ORDER BY p.proveedor_id, c.id_compra, pr.id_producto;
     `;
 
     conexion.query(query, (err, rows) => {
-      if (err) return res.send(err);
+      if (err) {
+        console.error('Error al ejecutar la consulta:', err);
+        return res.status(500).json({ error: 'Error al ejecutar la consulta' });
+      }
 
-      // Procesamos los resultados para agrupar por proveedor
+      console.log('Resultados de la consulta:', rows);
+
       const proveedores = rows.reduce((acc, row) => {
         if (!acc[row.proveedor_id]) {
           acc[row.proveedor_id] = {
@@ -38,31 +57,32 @@ proveedorlist.get("/", (req, res) => {
             facturas: []
           };
         }
-        
-        if (row.id_factura_compra) {
-          let factura = acc[row.proveedor_id].facturas.find(f => f.id_factura_compra === row.id_factura_compra);
+
+        if (row.id_compra) {
+          let factura = acc[row.proveedor_id].facturas.find(f => f.id_compra === row.id_compra);
           if (!factura) {
             factura = {
-              id_factura_compra: row.id_factura_compra,
+              id_compra: row.id_compra,
               fecha_compra: row.fecha_compra,
               productos: []
             };
             acc[row.proveedor_id].facturas.push(factura);
           }
-          
+
           if (row.ID_Producto) {
             factura.productos.push({
               ID_Producto: row.ID_Producto,
-              nombre_producto: row.nombre_producto,
+              nombre_producto: row.Nombre,
               cantidad: row.cantidad,
-              Precio: row.Precio,
-              precio_producto: row.precio_producto
+              precio: row.Precio
             });
           }
         }
 
         return acc;
       }, {});
+
+      console.log('Proveedores procesados:', proveedores);
 
       res.json(Object.values(proveedores));
     });
@@ -146,8 +166,10 @@ proveedorlist.post("/", (req, res) => {
         error: error.message,
       });
     }
+    console.log("voy aqui");
+    
 
-    conexion.query("INSERT INTO proveedor SET ?", [req.body], (err, result) => {
+    conexion.query("INSERT INTO proveedores SET ?", [req.body], (err, result) => {
       if (err) {
         return res.status(500).json({
           success: false,

@@ -59,6 +59,8 @@ const CustomerPage = () => {
 
   const filterByTimeRange = (facturas: FacturaVenta[]) => {
     const now = new Date();
+    console.log(facturas,"facturas aqui____________ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ");
+    
     return facturas.filter((fact) => {
       const fechaCompra = new Date(fact.fecha_compra);
       switch (timeRange) {

@@ -2,7 +2,7 @@
 import { useQuery } from  '@tanstack/react-query';
 import { useGetProducts } from "../api/products";
 import {useGetClientes_1} from "../api/client";
-import { useGetProveedor, useDeleteProveedor, usePostProveedor, useUpdateProveedor } from '../api/proveedorlist.tsx';
+import { useGetProveedor ,useGetFacturaCompra} from '../api/proveedorlist.tsx';
 
 
 export const useProducts = ()=>{
@@ -39,3 +39,13 @@ export const useProveedor = ()=>{
       return  {proveedor,refetch,error,isLoading}
       }
     
+      export const usefacturaCompra = ()=>{
+        const { data:proveedorCompra,refetch,error,isLoading} = useQuery({
+          queryKey: ['proveedor'],
+            queryFn: useGetFacturaCompra,
+            staleTime: 1000 * 60 * 30,
+            refetchOnWindowFocus: false,
+            refetchInterval: 1000 * 60 * 30,
+            });
+            return  {proveedorCompra,refetch,error,isLoading}
+            }

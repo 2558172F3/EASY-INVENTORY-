@@ -17,6 +17,7 @@ import Profile from "./routes/Profile.tsx";
 import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 import ProveedorList from "./routes/ProveedorList.jsx";
 import Signup from "./routes/Signup.tsx";
+import FacturaCompra from "./routes/facturaCompra.tsx"
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./index.css";
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/me",
         element: <Profile />,
+      },
+      {
+        path: "/facturaCompra",
+        element: <FacturaCompra />,
       },
 
     ],

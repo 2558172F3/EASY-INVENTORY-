@@ -39,6 +39,27 @@ export interface FacturaVenta {
   productos:    Producto[];
 }
 
+export interface FacturaCompra {
+  id_compra: number;
+  fecha_compra: Date;
+  productos: ProductoCompra[];
+}
+
+export interface ProductoCompra {
+  ID_Producto: number;
+  cantidad: number;
+  nombre_producto: string;
+  precio: number;
+}
+
+export interface ProveedorCompra {
+  proveedor_id: number;
+  nombre: string;
+  direccion: string;
+  telefono: string;
+  facturas: FacturaCompra[];
+}
+
 export interface Producto {
   id_producto: number;
   cantidad:    number;
@@ -71,10 +92,11 @@ export interface ClientesPost {
 }
 
 export interface Proveedor {
-  proveedor_id: number;
+  proveedor_id: number | null;
   nombre:       string;
   direccion:    string;
   telefono:     string;
+  email:        string;
 }
 export interface Categoria {
   id_categoria: number;

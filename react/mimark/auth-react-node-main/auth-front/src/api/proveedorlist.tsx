@@ -1,4 +1,4 @@
-import { Proveedor } from '../types/types'
+import { Proveedor,ProveedorCompra } from '../types/types'
 import apiClient from '../apiClient'
 
 export const useGetProveedor = async () => {
@@ -12,6 +12,17 @@ export const useGetProveedor = async () => {
   return 
 }
 
+
+export const useGetFacturaCompra = async () => {
+  try {
+      const response = await apiClient.get<ProveedorCompra[]>('/proveedor/compras')
+      return response.data
+  } catch (error) {
+      console.log(error)
+      return
+  }
+return 
+}
 
 
 export const usePostProveedor = async (proveedor: Proveedor) => {
